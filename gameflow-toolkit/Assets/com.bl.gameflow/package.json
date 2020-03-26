@@ -1,0 +1,15 @@
+{
+    "name": "com.bl.gameflow",
+    "displayName": "GameFlow-Toolkit",
+    "version": "1.0.0",
+    "unity": "2018.4",
+    "description": "A Lightweight, Designer-Oriented Toolkit for Unity Games.",
+
+    "dependencies": {},
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/blueloveTH/gameflow-toolkit",
+      "revision": "xxxxxxxx"
+    }
+  }
+  
