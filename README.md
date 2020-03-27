@@ -2,7 +2,7 @@
 
 为同时兼任策划和程序的游戏制作人打造的开发工具包！
 
-A Lightweight, Designer-Oriented Framework for Unity Games.
+A Lightweight, Designer-Oriented Toolkit for Unity Games.
 
 <br>
 
