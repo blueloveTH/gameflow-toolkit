@@ -14,8 +14,6 @@ A Lightweight, Designer-Oriented Framework for Unity Games.
 
 > gameflow原先是一个名为GameDevKit项目的一部分，出自2018年秋季探索（Autumn Quest）精化并独立出来。经过多个项目实践经验的积累，逐渐得到完善。
 
-<br>
-
 ## 安装与配置
 
 ([latest release](https://github.com/blueloveTH/gameflow-toolkit/releases/tag/latest_release))  ([all releases](https://github.com/blueloveTH/gameflow-toolkit/releases))
