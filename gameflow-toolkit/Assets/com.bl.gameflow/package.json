@@ -1,7 +1,7 @@
 {
     "name": "com.bl.gameflow",
     "displayName": "GameFlow-Toolkit",
-    "version": "1.0.0",
+    "version": "0.1.0-preview",
     "unity": "2018.4",
     "description": "A Lightweight, Designer-Oriented Toolkit for Unity Games.",
 
