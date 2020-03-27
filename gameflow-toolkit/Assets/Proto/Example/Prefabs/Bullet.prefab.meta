@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 0e0f294d26e2e00449ac0286d8b9f280
+labels:
+- prefab
+- example
+- Proto*
+- turret
+- weapon
+- arena
+- actor
+- signal
+- event
+- observable
+timeCreated: 1460497724
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

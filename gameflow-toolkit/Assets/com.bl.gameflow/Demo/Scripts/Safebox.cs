@@ -7,14 +7,14 @@ public class Safebox : MonoBehaviour
 
     void Start()
     {
-        fd = FlowDiagram.Empty();
+        fd = new FlowDiagram();
 
-        FlowNode stage1 = fd.AddNode("stage1");
-        FlowNode stage2 = fd.AddNode("stage2");
-        FlowNode stage3 = fd.AddNode("stage3");
-        FlowNode stage4 = fd.AddNode("stage4");
-        FlowNode success = fd.AddNode("success");
-        FlowNode failure = fd.AddNode("failure");
+        FlowNode stage1 = fd.CreateNode("stage1");
+        FlowNode stage2 = fd.CreateNode("stage2");
+        FlowNode stage3 = fd.CreateNode("stage3");
+        FlowNode stage4 = fd.CreateNode("stage4");
+        FlowNode success = fd.CreateNode("success");
+        FlowNode failure = fd.CreateNode("failure");
 
         success.onEnter += (x) => fd.isLocked = true;
 

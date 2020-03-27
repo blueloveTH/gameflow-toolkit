@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 321c1d3efb97f9e4aa0b5e74d3f2e067
+labels:
+- Proto*
+- AI
+- behavior
+- node
+- pool
+- intercept
+- actor
+- behaviortree
+- statemachine
+- fsm
+- behaviourtree
+- event
+- signal
+- observable
+- behaviour
+- vector
+- pooling
+- poolmanager
+- example
+timeCreated: 1460414248
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,17 +1,20 @@
-﻿namespace GameFlow
+﻿namespace GameFlow.AI
 {
-    [NodeMenuItem("Composite/Selector",
-        description: "This node is similar to OR operation, it will return Success once a child have returned Success.")]
-    public sealed class Selector : CompositeNode
+    /// <summary>
+    /// [Composite/Selector]
+    /// This node is similar to OR operation, it will return Success once a child have returned Success.
+    /// </summary>
+    public sealed class Selector : ParentNode
     {
         private int currentIndex;
 
-        protected override void OnInit()
+        internal override void Reset(BehaviourTree tree)
         {
+            base.Reset(tree);
             currentIndex = 0;
         }
 
-        public override BehaviourStatus Tick()
+        internal override BehaviourStatus Tick()
         {
             var status = GetChild(currentIndex).Tick();
 

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace GameFlow
 {
@@ -31,6 +29,11 @@ namespace GameFlow
             return arcList.Find(match);
         }
 
+        public FlowArc GetArc(int index)
+        {
+            return arcList[index];
+        }
+
         public FlowArc AddArc(FlowNode target)
         {
             FlowArc arc = new FlowArc(this, target);
@@ -54,10 +57,5 @@ namespace GameFlow
         protected internal virtual Task OnExitTask() { return null; }
         protected virtual void OnEnter() { onEnter?.Invoke(this); }
         protected virtual void OnExit() { onExit?.Invoke(this); }
-
-        public static implicit operator string(FlowNode node)
-        {
-            return node.name;
-        }
     }
 }

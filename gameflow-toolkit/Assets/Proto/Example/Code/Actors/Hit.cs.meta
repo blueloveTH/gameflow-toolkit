@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 1b105ee2a0930cb42a90f4dd364d5d02
+labels:
+- AI
+- behavior
+- actor
+- behaviourtree
+- behaviour
+- Proto*
+timeCreated: 1458169797
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

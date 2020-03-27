@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-namespace GameFlow
+namespace GameFlow.AI
 {
     public abstract class ParentNode : BehaviourNode
     {
-        /// <summary>
-        /// Identical to GetChild(0) with null check
-        /// </summary>
+        private List<BehaviourNode> children = new List<BehaviourNode>();
+
         public BehaviourNode child0 {
             get {
                 if (childCount == 0) return null;
@@ -16,31 +13,37 @@ namespace GameFlow
             }
         }
 
-        protected BehaviourNode GetChild(int i)
+        public T AddChild<T>() where T : BehaviourNode, new()
         {
-            return transform.GetChild(i).GetComponent<BehaviourNode>();
+            string childName = string.Format("{1}/{0}: {2}", childCount, name, typeof(T).Name);
+            T node = tree.CreateNode<T>(childName);
+            children.Add(node);
+            return node;
         }
 
-        protected int childCount { get { return transform.childCount; } }
-
-        internal override void Init()
+        protected BehaviourNode GetChild(int i)
         {
-            base.Init();
-            ForEachChild((x) => x.Init());
+            return children[i];
+        }
+
+        protected int childCount => children.Count;
+
+        internal override void Reset(BehaviourTree tree)
+        {
+            base.Reset(tree);
+            ForEachChild((x) => x.Reset(tree));
         }
 
         protected BehaviourNode[] GetChildNodes()
         {
-            return transform.GetCpntsInDirectChildren<BehaviourNode>();
+            List<BehaviourNode> nodes = new List<BehaviourNode>();
+            ForEachChild((x) => nodes.Add(x));
+            return nodes.ToArray();
         }
 
         protected void ForEachChild(System.Action<BehaviourNode> action)
         {
-            int cnt = childCount;
-            for (int i = 0; i < cnt; i++)
-            {
-                action.Invoke(GetChild(i));
-            }
+            children.ForEach(action);
         }
     }
 }

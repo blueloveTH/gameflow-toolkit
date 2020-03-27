@@ -1,24 +1,24 @@
-﻿using UnityEngine;
-
-namespace GameFlow
+﻿namespace GameFlow.AI
 {
-    [NodeMenuItem("Decorator/Repeater",
-        description: "This node will run its child specific times.")]
-    public sealed class Repeater : DecoratorNode
+    /// <summary>
+    /// [Decorator/Repeater]
+    /// This node will run its child specific times.
+    /// </summary>
+    public sealed class Repeater : ParentNode
     {
-        [SerializeField] int times;
-        [SerializeField] bool endOnFailure;
+        public int times { get; set; }
+        public bool endOnFailure { get; set; }
 
         private int currentTimes;
 
-        public override BehaviourStatus Tick()
+        internal override BehaviourStatus Tick()
         {
             switch (child0.Tick())
             {
                 case BehaviourStatus.Running: break;
                 case BehaviourStatus.Success:
                     {
-                        child0.Init();
+                        child0.Reset(tree);
                         currentTimes++;
                         if (currentTimes >= times) return BehaviourStatus.Success;
                         break;
@@ -28,7 +28,7 @@ namespace GameFlow
                         if (endOnFailure) return BehaviourStatus.Failure;
                         else
                         {
-                            child0.Init();
+                            child0.Reset(tree);
                             currentTimes++;
                             if (currentTimes >= times) return BehaviourStatus.Success;
                             break;
@@ -38,8 +38,9 @@ namespace GameFlow
             return BehaviourStatus.Running;
         }
 
-        protected override void OnInit()
+        internal override void Reset(BehaviourTree tree)
         {
+            base.Reset(tree);
             currentTimes = 0;
         }
     }

@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
 
-namespace GameFlow
+namespace GameFlow.AI
 {
-    [NodeMenuItem("Composite/Parallel",
-        description: "This node is similar to Sequencer, but simultaneously.")]
-    public sealed class Parallel : CompositeNode
+    /// <summary>
+    /// [Composite/Parallel]
+    /// This node is similar to Sequencer, but simultaneously.
+    /// </summary>
+    public sealed class Parallel : ParentNode
     {
         private HashSet<BehaviourNode> rest;
 
-        public override BehaviourStatus Tick()
+        internal override BehaviourStatus Tick()
         {
             List<BehaviourNode> succeed = new List<BehaviourNode>();
             foreach (var item in rest)
@@ -25,8 +27,9 @@ namespace GameFlow
             return BehaviourStatus.Running;
         }
 
-        protected override void OnInit()
+        internal override void Reset(BehaviourTree tree)
         {
+            base.Reset(tree);
             rest = new HashSet<BehaviourNode>(GetChildNodes());
         }
     }

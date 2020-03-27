@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace GameFlow
+namespace GameFlow.AI
 {
     public enum BehaviourStatus
     {
@@ -9,110 +11,108 @@ namespace GameFlow
         Success = 1,
     }
 
-    public class BehaviourTree : MonoBehaviour
+    public sealed class BehaviourTree : IEnumerable<BehaviourNode>
     {
-        [SerializeField] bool _playOnStart = true;
-        [SerializeField] bool _restartWhenComplete;
-        [SerializeField] float tickRate = 0.1f;
-        public bool restartWhenComplete {
-            get { return _restartWhenComplete; }
-            set { _restartWhenComplete = value; }
-        }
+        private Dictionary<string, BehaviourNode> nodes = new Dictionary<string, BehaviourNode>();
 
-        private IGameModel _model;
-        public IGameModel model {
-            get {
-                if (_model == null)
-                {
-                    if (transform.parent == null) return null;
-                    var r = transform.parent.GetComponents<MonoBehaviour>();
-                    _model = System.Array.Find(r, (x) => x is IGameModel) as IGameModel;
-                }
-                return _model;
-            }
-        }
+        public bool restartWhenComplete { get; set; } = true;
+        public float tickRate = 0.1f;
 
-        public event System.Action OnEnd;
-        public bool IsPlaying { get; private set; }
+        public MonoBehaviour owner { get; private set; }
 
-        private BehaviourNode _entry;
-        public BehaviourNode entry {
-            get {
-                if (_entry == null)
-                    _entry = transform.GetChild(0).GetComponent<BehaviourNode>();
-                return _entry;
-            }
-        }
-
-        protected void Start()
+        public BehaviourTree(MonoBehaviour owner)
         {
-            if (_playOnStart) Begin();
+            this.owner = owner;
         }
+
+        public BehaviourNode root => nodes["root"];
+
+        internal T CreateNode<T>(string name) where T : BehaviourNode, new()
+        {
+            T newNode = new T();
+            newNode.name = name;
+            newNode.tree = this;
+            nodes.Add(name, newNode);
+            return newNode;
+        }
+
+        public T CreateRoot<T>() where T : BehaviourNode, new()
+        {
+            var newNode = CreateNode<T>("root");
+            return newNode;
+        }
+
+        private TreePlayTask treePlayTask;
+        public bool IsPlaying => treePlayTask.IsPlaying();
 
         public void Begin()
         {
             if (IsPlaying) return;
-            entry.Init();
-            IsPlaying = true;
+
+            treePlayTask = PlayTask();
+            treePlayTask.Play();
         }
 
-        private float restTime = 0;
-
-        private void Update()
+        public void Reset()
         {
-            if (!IsPlaying) return;
-
-            if (tickRate <= 0)
-            {
-                TreeUpdate();
-                return;
-            }
-
-            if (restTime <= 0)
-            {
-                TreeUpdate();
-                restTime = tickRate;
-            }
-            else
-            {
-                restTime -= Time.deltaTime;
-            }
+            foreach (var item in this)
+                (item as BehaviourNode).Reset(this);
         }
 
-        private void TreeUpdate()
+        public BehaviourStatus Tick()
         {
-            if (entry.Tick() != BehaviourStatus.Running) End();
+            return root.Tick();
         }
 
         public void End()
         {
-            if (!IsPlaying) return;
-            IsPlaying = false;
-            OnEnd?.Invoke();
-            if (restartWhenComplete) Begin();
+            treePlayTask?.Kill();
         }
 
-        public PlayTask NewPlayTask() { return new PlayTask(this); }
+        public TreePlayTask PlayTask()
+        {
+            var t = new TreePlayTask(this);
+            if (restartWhenComplete) t.onComplete += Begin;
+            return t;
+        }
 
-        public class PlayTask : Task
+        public IEnumerator<BehaviourNode> GetEnumerator()
+        {
+            foreach (var item in nodes)
+                yield return item.Value;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator() as IEnumerator;
+        }
+
+        public sealed class TreePlayTask : Task
         {
             public BehaviourTree tree { get; private set; }
-            internal PlayTask(BehaviourTree tree)
+
+            public TreePlayTask(BehaviourTree tree)
             {
                 this.tree = tree;
-                tree.OnEnd += Tree_OnEnd;
-            }
-
-            private void Tree_OnEnd()
-            {
-                Complete();
+                owner = tree.owner;
             }
 
             protected override void OnPlay()
             {
+                tree.Reset();
+                StartCoroutine(TreeCoroutine());
                 base.OnPlay();
-                tree.gameObject.SetActive(true);
-                tree.Begin();
+            }
+
+            private IEnumerator TreeCoroutine()
+            {
+                while (true)
+                {
+                    if (tree.Tick() != BehaviourStatus.Running) break;
+                    yield return new WaitForSeconds(tree.tickRate);
+                }
+                yield return new WaitForEndOfFrame();
+                Complete();
             }
         }
     }

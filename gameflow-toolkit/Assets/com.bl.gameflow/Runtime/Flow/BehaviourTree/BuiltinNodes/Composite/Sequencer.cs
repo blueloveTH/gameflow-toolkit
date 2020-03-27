@@ -1,17 +1,20 @@
-﻿namespace GameFlow
+﻿namespace GameFlow.AI
 {
-    [NodeMenuItem("Composite/Sequencer",
-        description: "This node is similar to AND operation, it will return Success when all children have returned Success.")]
-    public sealed class Sequencer : CompositeNode
+    /// <summary>
+    /// [Composite/Sequencer]
+    /// This node is similar to AND operation, it will return Success when all children have returned Success.
+    /// </summary>
+    public sealed class Sequencer : ParentNode
     {
         private int currentIndex;
 
-        protected override void OnInit()
+        internal override void Reset(BehaviourTree tree)
         {
+            base.Reset(tree);
             currentIndex = 0;
         }
 
-        public override BehaviourStatus Tick()
+        internal override BehaviourStatus Tick()
         {
             var status = GetChild(currentIndex).Tick();
 

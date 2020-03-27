@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 8621d0825a598874fbe93608617c656a
+labels:
+- event
+- signal
+- observable
+- Proto*
+timeCreated: 1457307845
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

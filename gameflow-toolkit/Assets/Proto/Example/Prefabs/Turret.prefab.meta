@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 6b8d20778602b88478d555633ffd7345
+labels:
+- prefab
+- example
+- Proto*
+- turret
+- weapon
+- arena
+- AI
+- behavior
+- behaviour
+- behaviourtree
+- fsm
+- statemachine
+- behaviortree
+- actor
+- node
+- intercept
+timeCreated: 1460497879
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -18,10 +18,10 @@ public class MutexLight : MonoBehaviour
 
     private void Fd_OnCurrentNodeChange(FlowNode node)
     {
-        if (node == "1")
+        if (node.name == "1")
         {
             foreach (var item in diagrams)
-                if (item.currentNode != node && item.currentNode == "1")
+                if (item.currentNode != node && item.currentNode.name == "1")
                     item.EnterNext();
         }
     }

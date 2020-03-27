@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: d481d14a22b090f4f900978738a3892b
+labels:
+- AI
+- behavior
+- node
+- intercept
+- actor
+- behaviortree
+- statemachine
+- fsm
+- behaviourtree
+- behaviour
+- Proto*
+timeCreated: 1458086568
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
