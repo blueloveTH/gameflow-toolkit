@@ -50,6 +50,15 @@ namespace GameFlow
         }
 
         /// <summary>
+        /// 设置data字典中的一个键值对
+        /// </summary>
+        public Signal SetData(string key, object value)
+        {
+            data[key] = value;
+            return this;
+        }
+
+        /// <summary>
         /// 将该信号置于屏蔽状态，使其失效，不能再被传递
         /// </summary>
         public void Block()

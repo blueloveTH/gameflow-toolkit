@@ -43,5 +43,14 @@ namespace GameFlow
             data.Add(key, value);
             return this;
         }
+
+        /// <summary>
+        /// 设置data字典中的一个键值对
+        /// </summary>
+        public FlowArc SetData(string key, object value)
+        {
+            data[key] = value;
+            return this;
+        }
     }
 }
