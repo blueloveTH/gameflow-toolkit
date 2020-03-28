@@ -7,10 +7,16 @@ namespace GameFlow
 {
     public abstract class InteractionUnit : MonoBehaviour
     {
+        /// <summary>
+        /// 置为true启动调试信息，将交互细节输出到控制台
+        /// </summary>
         public static bool enableDebugInfo { get; set; } = false;
 
         private InteractionHeader _header;
 
+        /// <summary>
+        /// 返回本单元所属的交互头
+        /// </summary>
         public InteractionHeader header {
             get {
                 if (_header == null)
@@ -21,6 +27,9 @@ namespace GameFlow
             }
         }
 
+        /// <summary>
+        /// 将信号发射到目标交互单元
+        /// </summary>
         protected void Emit(Signal signal, InteractionUnit target)
         {
             if (target == null) return;
@@ -29,6 +38,9 @@ namespace GameFlow
             target.OnSignalInternal(signal);
         }
 
+        /// <summary>
+        /// 将信号发射到目标游戏对象，其包含的所有交互单元都会收到这个信号
+        /// </summary>
         protected void Emit(Signal signal, GameObject target)
         {
             var units = target.GetComponents<InteractionUnit>();
@@ -39,6 +51,9 @@ namespace GameFlow
             }
         }
 
+        /// <summary>
+        /// 将信号发射到目标交互头，其所属的所有交互单元都会收到这个信号
+        /// </summary>
         protected void Emit(Signal signal, InteractionHeader target)
         {
             header.Emit(signal, target);
@@ -62,6 +77,7 @@ namespace GameFlow
         {
             return true;
         }
+
 
         public string unitName {
             get {

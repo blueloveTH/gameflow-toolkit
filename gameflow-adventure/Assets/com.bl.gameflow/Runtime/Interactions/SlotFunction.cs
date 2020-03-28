@@ -7,14 +7,13 @@ namespace GameFlow
     {
         private string signalName;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="signalName">接收的信号名称</param>
         public SlotFunction(string signalName)
         {
             this.signalName = signalName;
-        }
-
-        public SlotFunction()
-        {
-
         }
 
         internal bool CanReceive(Signal signal)

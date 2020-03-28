@@ -1,17 +1,28 @@
-﻿using System.Collections.Generic;
-using System;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GameFlow
 {
     public sealed class Signal
     {
+        /// <summary>
+        /// 返回信号的名称
+        /// </summary>
         public string name { get; private set; }
-        public Dictionary<string, object> data { get; private set; }
+        /// <summary>
+        /// 返回信号的源
+        /// </summary>
+        public InteractionUnit src { get; private set; }
+        /// <summary>
+        /// 指示信号是否已被屏蔽失效
+        /// </summary>
         public bool isBlocked { get; private set; }
+        /// <summary>
+        /// 指示是否是一个全局广播信号
+        /// </summary>
         public bool isGlobal { get; internal set; }
 
-        public InteractionUnit src { get; private set; }
+        private Dictionary<string, object> data;
 
         internal Signal(InteractionUnit src, string name)
         {
@@ -21,12 +32,26 @@ namespace GameFlow
             data = new Dictionary<string, object>();
         }
 
-        public Signal AddKeyValue(string key, object value)
+        /// <summary>
+        /// 向data字典添加一个键值对
+        /// </summary>
+        public Signal AddData(string key, object value)
         {
             data.Add(key, value);
             return this;
         }
 
+        /// <summary>
+        /// 从data字典取出值
+        /// </summary>
+        public T GetData<T>(string key)
+        {
+            return (T)data[key];
+        }
+
+        /// <summary>
+        /// 将该信号置于屏蔽状态，使其失效，不能再被传递
+        /// </summary>
         public void Block()
         {
             isBlocked = true;
