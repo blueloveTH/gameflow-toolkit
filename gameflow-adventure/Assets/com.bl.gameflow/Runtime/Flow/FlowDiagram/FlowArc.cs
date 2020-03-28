@@ -5,9 +5,15 @@ namespace GameFlow
     public sealed class FlowArc
     {
         #region Serialization
-        public Dictionary<string, object> data { get; private set; }
+        private Dictionary<string, object> data;
 
+        /// <summary>
+        /// 返回源节点
+        /// </summary>
         public FlowNode source { get; private set; }
+        /// <summary>
+        /// 返回目标节点
+        /// </summary>
         public FlowNode target { get; private set; }
         #endregion
 
@@ -21,12 +27,18 @@ namespace GameFlow
             this.target = target;
         }
 
-        public T GetValue<T>(string key)
+        /// <summary>
+        /// 从data字典取出值
+        /// </summary>
+        public T GetData<T>(string key)
         {
             return (T)data[key];
         }
 
-        public FlowArc AddKeyValue(string key, object value)
+        /// <summary>
+        /// 向data字典添加一个键值对
+        /// </summary>
+        public FlowArc AddData(string key, object value)
         {
             data.Add(key, value);
             return this;

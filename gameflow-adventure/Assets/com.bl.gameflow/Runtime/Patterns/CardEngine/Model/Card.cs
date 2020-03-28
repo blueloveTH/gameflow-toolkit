@@ -16,7 +16,7 @@ namespace GameFlow.Patterns
 
         public Task ExecTask()
         {
-            return currentTask = CreateExecTask().OnCompleteAdd(() => onTaskComplete?.Invoke());
+            return currentTask = CreateExecTask().OnComplete(() => onTaskComplete?.Invoke());
         }
 
         public static T New<T>() where T : Card

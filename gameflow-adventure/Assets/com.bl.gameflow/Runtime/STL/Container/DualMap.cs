@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 namespace STL.Container
 {
-    public class DualMap<TypeA, TypeB> : IEnumerable<KeyValuePair<TypeA, TypeB>>, IEnumerable
+    public sealed class DualMap<TypeA, TypeB> : IEnumerable<KeyValuePair<TypeA, TypeB>>, IEnumerable
     {
         private Dictionary<TypeA, TypeB> dicA2B = new Dictionary<TypeA, TypeB>();
         private Dictionary<TypeB, TypeA> dicB2A = new Dictionary<TypeB, TypeA>();
