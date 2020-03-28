@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace STL.Container
 {
-    public sealed class ObjectPool<T> where T : class, IEnumerable<T>
+    public sealed class ObjectPool<T> : IEnumerable<T> where T : class
     {
         private Stack<T> buffer = new Stack<T>();
 
@@ -21,11 +22,6 @@ namespace STL.Container
             this.onPush = onPush;
         }
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            return buffer.GetEnumerator();
-        }
-
         public void Push(T t)
         {
             onPush?.Invoke(t);
@@ -42,6 +38,17 @@ namespace STL.Container
         }
 
         public void Clear() { buffer.Clear(); }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return ((IEnumerable<T>)buffer).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<T>)buffer).GetEnumerator();
+        }
+
         public int Count { get { return buffer.Count; } }
     }
 
