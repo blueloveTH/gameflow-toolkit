@@ -18,12 +18,27 @@ namespace GameFlow
         {
             if (!isActiveAndEnabled) return;
 
-            var units = transform.GetCpntsInDirectChildren<InteractionUnit>();
-            foreach (var item in units)
+            foreach (var item in GetUnits())
             {
                 if (signal.isBlocked) break;
                 item.OnSignalInternal(signal);
             }
+        }
+
+        /// <summary>
+        /// 返回第一个指定类型的交互单元
+        /// </summary>
+        public T GetUnit<T>() where T : InteractionUnit
+        {
+            return transform.GetCpntInDirectChildren<T>();
+        }
+
+        /// <summary>
+        /// 返回所有交互单元
+        /// </summary>
+        public InteractionUnit[] GetUnits()
+        {
+            return transform.GetCpntsInDirectChildren<InteractionUnit>();
         }
     }
 }

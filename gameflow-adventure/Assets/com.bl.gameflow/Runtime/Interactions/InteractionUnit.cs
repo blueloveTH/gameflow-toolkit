@@ -17,14 +17,23 @@ namespace GameFlow
         /// <summary>
         /// 返回本单元所属的交互头
         /// </summary>
-        public InteractionHeader header {
-            get {
-                if (_header == null)
-                {
-                    _header = transform.GetCpntInDirectParent<InteractionHeader>();
-                }
-                return _header;
-            }
+        public InteractionHeader GetHeader()
+        {
+            if (_header != null) return _header;
+            Transform parent = transform.parent;
+            if (parent == null)
+                throw new Exception("InteractionUnit should have a parent GameObject.");
+            _header = parent.GetComponent<InteractionHeader>();
+            if (_header == null) _header = parent.gameObject.AddComponent<InteractionHeader>();
+            return _header;
+        }
+
+        /// <summary>
+        /// 等价于GetHeader().GetComponent&lt;T&gt;()
+        /// </summary>
+        public T GetCpntInHeader<T>() where T : Component
+        {
+            return GetHeader().GetComponent<T>();
         }
 
         /// <summary>
@@ -33,7 +42,7 @@ namespace GameFlow
         protected void Emit(Signal signal, InteractionUnit target)
         {
             if (target == null) return;
-            if (target.header != null && signal.src.header == target.header)
+            if (signal.src.GetHeader() == target.GetHeader())
                 return;
             target.OnSignalInternal(signal);
         }
@@ -56,7 +65,7 @@ namespace GameFlow
         /// </summary>
         protected void Emit(Signal signal, InteractionHeader target)
         {
-            header.Emit(signal, target);
+            GetHeader().Emit(signal, target);
         }
 
         internal void OnSignalInternal(Signal signal)
