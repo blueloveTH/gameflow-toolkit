@@ -68,20 +68,38 @@ namespace GameFlow
             GetHeader().Emit(signal, target);
         }
 
+        private event System.Action<Signal> onSignal;
+
+        /// <summary>
+        /// 添加一个动态槽函数
+        /// </summary>
+        public void AddSlot(Action<Signal> slot) { onSignal += slot; }
+
+        /// <summary>
+        /// 移除一个动态槽函数
+        /// </summary>
+        public void RemoveSlot(Action<Signal> slot) { onSignal -= slot; }
+
         internal void OnSignalInternal(Signal signal)
         {
             if (signal.isBlocked || !isActiveAndEnabled) return;
+            if (!CanReceive(signal)) return;
 
-            foreach (var item in slots)
+            foreach (var item in staticSlots)
             {
-                if (CanReceive(signal) && item.Key.CanReceive(signal))
+                if (item.Key.CanReceive(signal))
                 {
                     if (enableDebugInfo) print(signal.Summary(this));
                     item.Value.Invoke(this, new object[] { signal });
                 }
             }
+
+            onSignal?.Invoke(signal);
         }
 
+        /// <summary>
+        /// 用于过滤本单元所接收的所有信号，默认返回true
+        /// </summary>
         protected virtual bool CanReceive(Signal signal)
         {
             return true;
@@ -98,7 +116,7 @@ namespace GameFlow
         }
 
         private Dictionary<SlotFunction, MethodInfo> _slots;
-        private Dictionary<SlotFunction, MethodInfo> slots {
+        private Dictionary<SlotFunction, MethodInfo> staticSlots {
             get {
                 if (_slots == null)
                     _slots = GetSlots(GetType());
