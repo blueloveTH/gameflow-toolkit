@@ -32,9 +32,9 @@ public class Safebox : MonoBehaviour
             item.onExit += (x) => print(x.name + " (OnExit)");
 
             item.enterTaskCreator +=
-                () => Task.DelayTask(2f).OnComplete(() => print("enter task end."));
+                () => Task.Delay(2f).OnComplete(() => print("enter task end."));
             item.exitTaskCreator +=
-                () => Task.DelayTask(2f).OnComplete(() => print("exit task end."));
+                () => Task.Delay(2f).OnComplete(() => print("exit task end."));
         }
         fd.Enter("stage1");
     }

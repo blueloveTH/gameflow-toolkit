@@ -22,5 +22,15 @@ A Designer-Oriented Flow-Control Toolkit for Game Mechanisms in Unity.
 
 ## 快速开始
 
+```c#
+//当玩家按下鼠标左键后输出Hello, world!
+TaskList list = new TaskList(){
+    Task.WaitUntil(() => Input.GetMouseButtonDown(0)),
+    () => Debug.Log("Hello, world!"),
+}
+
+list.Play();
+```
+
 
 

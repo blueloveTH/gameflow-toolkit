@@ -38,7 +38,7 @@ namespace GameFlow
             item.onComplete += Item_OnComplete;
         }
 
-        public void Add(System.Action item) { Add(Task.ActionTask(item)); }
+        public void Add(System.Action item) { Add(Task.Action(item)); }
 
         public void InsertAt(int index, Task item)
         {
@@ -47,7 +47,7 @@ namespace GameFlow
             item.onComplete += Item_OnComplete;
         }
 
-        public void InsertAt(int index, System.Action item) { InsertAt(index, Task.ActionTask(item)); }
+        public void InsertAt(int index, System.Action item) { InsertAt(index, Task.Action(item)); }
 
         public void RemoveAt(int index)
         {

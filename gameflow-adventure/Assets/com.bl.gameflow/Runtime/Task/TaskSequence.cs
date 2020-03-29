@@ -20,7 +20,7 @@
         public void Insert(float atPosition, Task task)
         {
             TaskList list = new TaskList();
-            list.Add(Task.DelayTask(atPosition));
+            list.Add(Task.Delay(atPosition));
             list.Add(task);
 
             seqBody.Add(list);
@@ -32,7 +32,7 @@
         /// </summary>
         public void Insert(float atPosition, System.Action action)
         {
-            Insert(atPosition, Task.ActionTask(action));
+            Insert(atPosition, Task.Action(action));
         }
     }
 }

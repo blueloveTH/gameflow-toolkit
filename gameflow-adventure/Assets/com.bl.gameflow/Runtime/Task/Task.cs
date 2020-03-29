@@ -178,7 +178,7 @@ namespace GameFlow
         /// <summary>
         /// 创建任务：延迟指定时间（秒）
         /// </summary>
-        public static DelayTask DelayTask(float duration, bool useUnscaledTime = false)
+        public static DelayTask Delay(float duration, bool useUnscaledTime = false)
         {
             return new DelayTask(duration, useUnscaledTime);
         }
@@ -186,7 +186,7 @@ namespace GameFlow
         /// <summary>
         /// 创建任务：等待直到给定的bool表达式为true
         /// </summary>
-        public static WaitUntilTask WaitUntilTask(System.Func<bool> predicate)
+        public static WaitUntilTask WaitUntil(System.Func<bool> predicate)
         {
             return new WaitUntilTask(predicate);
         }
@@ -194,7 +194,7 @@ namespace GameFlow
         /// <summary>
         /// 创建任务：调用一个无参方法（将普通函数转换为Task对象）
         /// </summary>
-        public static ActionTask ActionTask(System.Action action)
+        public static ActionTask Action(System.Action action)
         {
             return new ActionTask(action);
         }
@@ -202,15 +202,15 @@ namespace GameFlow
         /// <summary>
         /// 创建任务：延迟指定帧数
         /// </summary>
-        public static DelayFramesTask DelayFramesTask(int frameCount)
+        public static DelayFramesTask DelayFrames(int frameCount)
         {
             return new DelayFramesTask(frameCount);
         }
 
-        public static WWWTask WWWTask(string url)
-        {
-            return new WWWTask(url);
-        }
+        //public static WWWTask WWWTask(string url)
+        //{
+        //    return new WWWTask(url);
+        //}
         #endregion
     }
 
