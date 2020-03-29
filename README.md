@@ -2,11 +2,11 @@
 
 为同时兼任策划和程序的游戏制作人打造的开发工具包！
 
-A Lightweight, Designer-Oriented Toolkit for Unity Games.
+A Designer-Oriented Flow-Control Toolkit for Game Mechanisms in Unity.
 
 <br>
 
-**GameFlow-Tookit（简称gf）** 是一款用于制作Unity游戏的开源工具包，出自2018年秋季探索（Autumn Quest），作为GameDevKit核心组件，经过多个独立项目的实践积累，精化并逐步完善。特点如下：
+**GameFlow-Tookit** 是一款用于制作Unity游戏的开源工具包，通过它可以轻松创建和管理游戏机制的交互。gf出自2018年秋季探索（Autumn Quest），作为GameDevKit核心组件，经过多个项目的实践积累，精化并逐步完善。特点如下：
 
 + 快速实验玩法
 + 轻量、极简的API

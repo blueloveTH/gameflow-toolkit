@@ -71,12 +71,12 @@ namespace GameFlow
         private event System.Action<Signal> onSignal;
 
         /// <summary>
-        /// 添加一个动态槽函数
+        /// 添加一个信号接收器
         /// </summary>
         public void AddSlot(Action<Signal> slot) { onSignal += slot; }
 
         /// <summary>
-        /// 移除一个动态槽函数
+        /// 移除一个信号接收器
         /// </summary>
         public void RemoveSlot(Action<Signal> slot) { onSignal -= slot; }
 
