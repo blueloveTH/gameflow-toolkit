@@ -32,7 +32,7 @@
         /// </summary>
         public void Insert(float atPosition, System.Action action)
         {
-            Insert(atPosition, Task.Action(action));
+            Insert(atPosition, Task.DoAction(action));
         }
     }
 }

@@ -16,21 +16,52 @@ A Designer-Oriented Flow-Control Toolkit for Game Mechanisms in Unity.
 
 ([latest release](https://github.com/blueloveTH/gameflow-toolkit/releases/tag/latest_release))  ([all releases](https://github.com/blueloveTH/gameflow-toolkit/releases))
 
+方式一：使用Unity Package Manager（upm）
 
+1. Windows/Package Manager
+
+2. Add package from disk...
+
+3. 选择package.json
 
 
 
 ## 快速开始
 
+#### TaskList
+
 ```c#
-//当玩家按下鼠标左键后输出Hello, world!
+//当鼠标左键被按下后，输出Hello, world!
 TaskList list = new TaskList(){
     Task.WaitUntil(() => Input.GetMouseButtonDown(0)),
     () => Debug.Log("Hello, world!"),
 }
 
+list.onComplete += () => Debug.Log("The list is completed.");
 list.Play();
 ```
 
 
+
+#### FlowDiagram
+
+```c#
+
+```
+
+
+
+#### InteractionUnit
+
+```c#
+
+```
+
+
+
+#### BehaviourTree
+
+```c#
+
+```
 

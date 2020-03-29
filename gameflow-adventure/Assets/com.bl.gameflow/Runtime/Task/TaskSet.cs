@@ -29,7 +29,7 @@ namespace GameFlow
             item.onComplete += Item_OnComplete;
         }
 
-        public void Add(System.Action item) { Add(Task.Action(item)); }
+        public void Add(System.Action item) { Add(Task.DoAction(item)); }
 
         public void Remove(Task item)
         {

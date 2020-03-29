@@ -194,7 +194,7 @@ namespace GameFlow
         /// <summary>
         /// 创建任务：调用一个无参方法（将普通函数转换为Task对象）
         /// </summary>
-        public static ActionTask Action(System.Action action)
+        public static ActionTask DoAction(System.Action action)
         {
             return new ActionTask(action);
         }
