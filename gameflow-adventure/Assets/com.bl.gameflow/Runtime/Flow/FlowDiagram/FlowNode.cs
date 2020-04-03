@@ -78,6 +78,16 @@ namespace GameFlow
             return arc;
         }
 
+        public bool CompareName(string name)
+        {
+            return this.name == name;
+        }
+
+        public bool CompareName(System.Enum e)
+        {
+            return this.name == e.ToStringKey();
+        }
+
         internal void Enter()
         {
             IsEntered = true;

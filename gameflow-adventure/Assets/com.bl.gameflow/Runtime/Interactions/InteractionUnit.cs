@@ -84,15 +84,11 @@ namespace GameFlow
         {
             if (signal.isBlocked || !isActiveAndEnabled) return;
             if (!CanReceive(signal)) return;
+            if (enableDebugInfo) print(signal.Summary(this));
 
             foreach (var item in staticSlots)
-            {
                 if (item.Key.CanReceive(signal))
-                {
-                    if (enableDebugInfo) print(signal.Summary(this));
                     item.Value.Invoke(this, new object[] { signal });
-                }
-            }
 
             onSignal?.Invoke(signal);
         }
@@ -147,10 +143,20 @@ namespace GameFlow
                 InteractionCenter.main.AddSignalInternal(this, signalName);
         }
 
+        protected void AddGlobalSignal(System.Enum e)
+        {
+            AddGlobalSignal(e.ToStringKey());
+        }
+
         protected void RemoveGlobalSignal(string signalName)
         {
             if (signals.Remove(signalName))
                 InteractionCenter.main.RemoveSignalInternal(this, signalName);
+        }
+
+        protected void RemoveGlobalSignal(System.Enum e)
+        {
+            RemoveGlobalSignal(e.ToStringKey());
         }
 
         protected void Emit(Signal globalSignal)
@@ -166,9 +172,17 @@ namespace GameFlow
 
         protected Signal Signal(System.Enum e)
         {
-            return new Signal(this, e.ToString());
+            return new Signal(this, e.ToStringKey());
         }
         #endregion
     }
 
+}
+
+internal static class EnumExtension
+{
+    internal static string ToStringKey(this System.Enum e)
+    {
+        return string.Format("{0}.{1}", e.GetType().Name, e.ToString());
+    }
 }

@@ -24,7 +24,7 @@ namespace GameFlow
             }
         }
 
-        public FlowNode this[System.Enum e] => this[e.ToString()];
+        public FlowNode this[System.Enum e] => this[e.ToStringKey()];
 
         /// <summary>
         /// 锁定标记，置为true时禁止切换节点
@@ -150,7 +150,7 @@ namespace GameFlow
         {
             FlowDiagram fd = new FlowDiagram();
             foreach (var item in System.Enum.GetNames(typeof(T)))
-                fd.CreateNode(item);
+                fd.CreateNode(typeof(T).Name + "." + item);
             return fd;
         }
         #endregion
