@@ -23,6 +23,9 @@ namespace GameFlow
                 return null;
             }
         }
+
+        public FlowNode this[System.Enum e] => this[e.ToString()];
+
         /// <summary>
         /// 锁定标记，置为true时禁止切换节点
         /// </summary>
@@ -137,6 +140,17 @@ namespace GameFlow
             FlowNode onNode = fd.CreateNode("1");
             onNode.AddArc(offNode);
             offNode.AddArc(onNode);
+            return fd;
+        }
+
+        /// <summary>
+        /// 使用Enum类型创建流程图
+        /// </summary>
+        public static FlowDiagram CreateByEnum<T>() where T : System.Enum
+        {
+            FlowDiagram fd = new FlowDiagram();
+            foreach (var item in System.Enum.GetNames(typeof(T)))
+                fd.CreateNode(item);
             return fd;
         }
         #endregion

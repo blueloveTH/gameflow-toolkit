@@ -163,6 +163,11 @@ namespace GameFlow
         {
             return new Signal(this, name);
         }
+
+        protected Signal Signal(System.Enum e)
+        {
+            return new Signal(this, e.ToString());
+        }
         #endregion
     }
 
