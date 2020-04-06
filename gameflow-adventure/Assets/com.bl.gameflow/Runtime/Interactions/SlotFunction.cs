@@ -16,11 +16,6 @@ namespace GameFlow
             this.signalName = signalName;
         }
 
-        public SlotFunction(System.Enum e)
-        {
-            this.signalName = e.ToStringKey();
-        }
-
         internal bool CanReceive(Signal signal)
         {
             if (string.IsNullOrEmpty(signalName)) return true;

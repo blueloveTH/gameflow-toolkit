@@ -68,17 +68,22 @@ namespace GameFlow
             GetHeader().Emit(signal, target);
         }
 
-        private event System.Action<Signal> onSignal;
+        private Dictionary<Action<Signal>, Func<Signal, bool>> slotDic = new Dictionary<Action<Signal>, Func<Signal, bool>>();
 
         /// <summary>
         /// 添加一个信号接收器
         /// </summary>
-        public void AddSlot(Action<Signal> slot) { onSignal += slot; }
+        /// <param name="slot">接收器函数</param>
+        /// <param name="filter">过滤器函数</param>
+        public void AddSlot(Action<Signal> slot, Func<Signal, bool> filter = null)
+        {
+            slotDic[slot] = filter;
+        }
 
         /// <summary>
         /// 移除一个信号接收器
         /// </summary>
-        public void RemoveSlot(Action<Signal> slot) { onSignal -= slot; }
+        public void RemoveSlot(Action<Signal> slot) { slotDic.Remove(slot); }
 
         internal void OnSignalInternal(Signal signal)
         {
@@ -90,7 +95,12 @@ namespace GameFlow
                 if (item.Key.CanReceive(signal))
                     item.Value.Invoke(this, new object[] { signal });
 
-            onSignal?.Invoke(signal);
+            foreach (var item in slotDic)
+            {
+                if (item.Value != null && !item.Value.Invoke(signal))
+                    continue;
+                item.Key.Invoke(signal);
+            }
         }
 
         /// <summary>
@@ -159,10 +169,10 @@ namespace GameFlow
             RemoveGlobalSignal(e.ToStringKey());
         }
 
-        protected void Emit(Signal globalSignal)
+        protected void EmitGlobal(Signal signal)
         {
-            if (signals.Contains(globalSignal.name))
-                InteractionCenter.main.EmitInternal(this, globalSignal);
+            if (signals.Contains(signal.name))
+                InteractionCenter.main.EmitInternal(this, signal);
         }
 
         protected Signal Signal(string name)

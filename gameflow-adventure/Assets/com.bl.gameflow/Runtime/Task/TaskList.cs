@@ -26,6 +26,8 @@ namespace GameFlow
             }
         }
 
+        public int currentIndex => index;
+
         public TaskList() { }
 
         /// <summary>
