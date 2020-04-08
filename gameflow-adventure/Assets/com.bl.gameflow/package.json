@@ -1,9 +1,9 @@
 {
     "name": "com.bl.gameflow",
     "displayName": "GameFlow-Toolkit",
-    "version": "0.1.0-preview",
+    "version": "0.2.0-preview",
     "unity": "2018.4",
-    "description": "A Designer-Oriented Flow-Control Toolkit for Game Mechanisms in Unity.",
+    "description": "A Designer-Oriented Flow-Control Toolkit for Game Interactions in Unity.",
 
     "dependencies": {}
   }

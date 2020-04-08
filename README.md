@@ -2,7 +2,7 @@
 
 为同时兼任策划和程序的游戏制作人打造的开发工具包！
 
-A Designer-Oriented Flow-Control Toolkit for Game Mechanisms in Unity.
+A Designer-Oriented Flow-Control Toolkit for Game Interactions in Unity.
 
 <br>
 
