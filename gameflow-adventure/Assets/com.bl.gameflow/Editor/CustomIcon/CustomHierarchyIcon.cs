@@ -4,42 +4,38 @@ using UnityEngine;
 
 public abstract class CustomHierarchyIcon<T> where T : Component
 {
-    private Texture2D[] icons;
-    private static List<CustomHierarchyIcon<T>> instances = new List<CustomHierarchyIcon<T>>();
+    //private static List<CustomHierarchyIcon<T>> instances = new List<CustomHierarchyIcon<T>>();
 
-    public CustomHierarchyIcon(params string[] iconPath)
+    public CustomHierarchyIcon()
     {
-        icons = new Texture2D[iconPath.Length];
-        for (int i = 0; i < icons.Length; i++)
-            icons[i] = AssetDatabase.LoadAssetAtPath<Texture2D>(iconPath[i]);
-
-        if (icons.Length == 0) return;
         EditorApplication.hierarchyWindowItemOnGUI += hierarchyItemOnGUI;
         EditorApplication.RepaintHierarchyWindow();
-        instances.Add(this);
+
+        //instances.Add(this);
     }
+
+    protected static Texture2D LoadIconTex(string resPath)
+    {
+        return Resources.Load<Texture2D>(resPath);
+    }
+
+    protected abstract Texture2D GetIconTex(T t);
 
     private void hierarchyItemOnGUI(int instanceID, Rect selectionRect)
     {
         GameObject go = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
-
-        if (go == null || icons.Length == 0) return;
+        if (go == null) return;
 
         T t = go.GetComponent<T>();
+        if (t == null) return;
 
-        if (t != null)
+        var tex = GetIconTex(t);
+
+        if (tex != null)
         {
             Rect r = new Rect(selectionRect);
             r.x = r.width;
-
-            int i = GetIconIndex(t);
-            if (i < 0) return;
-            GUI.Label(r, icons[i]);
+            GUI.Label(r, tex);
         }
-    }
-
-    protected virtual int GetIconIndex(T t)
-    {
-        return 0;
     }
 }
