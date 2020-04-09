@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace STL.Container
+namespace GameFlow
 {
     public sealed class PriorityQueue<T> : IEnumerable, IEnumerable<T>
     {

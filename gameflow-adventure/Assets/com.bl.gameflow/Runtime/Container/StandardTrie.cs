@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace STL.Container
+namespace GameFlow
 {
     public sealed class StandardTrie<T>
     {

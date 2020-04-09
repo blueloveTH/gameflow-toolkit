@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace STL.Container
+namespace GameFlow
 {
     public sealed class DualMap<TypeA, TypeB> : IEnumerable<KeyValuePair<TypeA, TypeB>>, IEnumerable
     {
