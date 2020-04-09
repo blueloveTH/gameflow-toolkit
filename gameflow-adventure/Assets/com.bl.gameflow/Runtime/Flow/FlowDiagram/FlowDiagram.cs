@@ -50,9 +50,11 @@ namespace GameFlow
             InternalChange(nodes[name]);
         }
 
-        /// <summary>
-        /// 退出当前节点，进入新状态节点
-        /// </summary>
+        public void Enter(System.Enum e)
+        {
+            Enter(e.ToStringKey());
+        }
+
         public void Enter(FlowNode target)
         {
             if (target.diagram != this) throw new Exception("Diagram doesn't match.");
