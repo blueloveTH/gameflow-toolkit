@@ -11,7 +11,7 @@ namespace GameFlow
         /// <summary>
         /// Task对象已就绪，可以执行
         /// </summary>
-        Ready,   
+        Ready,
         /// <summary>
         /// Task对象正在运行
         /// </summary>
@@ -189,6 +189,14 @@ namespace GameFlow
         public static WaitUntilTask WaitUntil(System.Func<bool> predicate)
         {
             return new WaitUntilTask(predicate);
+        }
+
+        /// <summary>
+        /// 创建任务：等待指定的事件发生（实验性功能）
+        /// </summary>
+        public static WaitEventTask WaitEvent<T>(System.Func<T> objGetter, string eventName) where T : class
+        {
+            return new WaitEventTask(objGetter, typeof(T), eventName);
         }
 
         /// <summary>
