@@ -192,12 +192,12 @@ namespace GameFlow
         }
 
         /// <summary>
-        /// 创建任务：等待指定的事件发生（实验性功能）
+        /// 创建任务：等待指定的事件发生（实验性功能，Android平台暂不可用）
         /// </summary>
-        public static WaitEventTask WaitEvent<T>(System.Func<T> objGetter, string eventName) where T : class
-        {
-            return new WaitEventTask(objGetter, typeof(T), eventName);
-        }
+        //public static WaitEventTask WaitEvent<T>(System.Func<T> objGetter, string eventName) where T : class
+        //{
+        //    return new WaitEventTask(objGetter, typeof(T), eventName);
+        //}
 
         /// <summary>
         /// 创建任务：调用一个无参方法（将普通函数转换为Task对象）

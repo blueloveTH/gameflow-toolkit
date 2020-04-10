@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using System.Linq.Expressions;
 
 namespace GameFlow
 {
@@ -15,9 +14,9 @@ namespace GameFlow
         {
             this.objGetter = objGetter;
 
-            eventInfo = type.GetEvent(eventName,
-                BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+            eventInfo = type.GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
 
+            if (eventInfo == null) throw new Exception(string.Format("Event \"{0}\" cannot be found.", eventName));
             int cnt = eventInfo.EventHandlerType.GenericTypeArguments.Length;
 
             switch (cnt)
