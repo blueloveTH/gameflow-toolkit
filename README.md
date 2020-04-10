@@ -33,10 +33,10 @@ A Designer-Oriented Flow-Control Toolkit for Game Interactions in Unity.
 #### TaskList
 
 ```c#
-//当空格键被按下后，输出Hello, world!
+//例：等待空格键按下
 TaskList list = new TaskList(){
     Task.WaitUntil(() => Input.GetKeyDown(KeyCode.Space)),
-    () => Debug.Log("Hello, world!"),
+    () => Debug.Log("SPACE key down."),
 }
 
 list.onComplete += () => Debug.Log("The list is completed.");
@@ -48,7 +48,7 @@ list.Play();
 #### FlowDiagram
 
 ```c#
-//使用函数式API创建状态图
+//例：使用函数式API创建状态图
 public enum Colors{
     Black, white
 }
