@@ -3,7 +3,7 @@
     "displayName": "GameFlow-Toolkit",
     "version": "0.5.0-preview",
     "unity": "2018.4",
-    "description": "A Designer-Oriented Flow-Control Toolkit for Game Interactions in Unity.",
+    "description": "A Designer-Oriented Flow-Control Toolkit for Game Mechanism in Unity.",
 
     "dependencies": {}
   }
