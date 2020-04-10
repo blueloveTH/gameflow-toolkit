@@ -33,9 +33,9 @@ A Designer-Oriented Flow-Control Toolkit for Game Interactions in Unity.
 #### TaskList
 
 ```c#
-//当鼠标左键被按下后，输出Hello, world!
+//当空格键被按下后，输出Hello, world!
 TaskList list = new TaskList(){
-    Task.WaitUntil(() => Input.GetMouseButtonDown(0)),
+    Task.WaitUntil(() => Input.GetKeyDown(KeyCode.Space)),
     () => Debug.Log("Hello, world!"),
 }
 
@@ -48,7 +48,20 @@ list.Play();
 #### FlowDiagram
 
 ```c#
+//使用函数式API创建状态图
+public enum Colors{
+    Black, white
+}
 
+//定义图和节点
+FlowDiagram fd = FlowDiagram.CreateByEnum<Colors>();
+
+//定义回调
+fd[Colors.Black].onEnter += (x) => spRenderer.color = Color.black;
+fd[Colors.white].onEnter += (x) => spRenderer.color = Color.white;
+
+//初始化
+fd.Enter(Colors.Black);
 ```
 
 
