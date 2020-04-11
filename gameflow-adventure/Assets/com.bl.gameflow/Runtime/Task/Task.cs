@@ -208,6 +208,14 @@ namespace GameFlow
         }
 
         /// <summary>
+        /// 创建任务：异步等待函数的返回值
+        /// </summary>
+        public static FunctionTask<T> Function<T>()
+        {
+            return new FunctionTask<T>();
+        }
+
+        /// <summary>
         /// 创建任务：延迟指定帧数
         /// </summary>
         public static DelayFramesTask DelayFrames(int frameCount)
