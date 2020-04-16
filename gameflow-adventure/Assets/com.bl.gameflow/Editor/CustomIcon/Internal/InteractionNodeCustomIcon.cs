@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-internal sealed class InteractionUnitCustomIcon : CustomHierarchyIcon<InteractionNode>
+internal sealed class InteractionNodeCustomIcon : CustomHierarchyIcon<InteractionNode>
 {
     private static Texture2D activeIcon, inactiveIcon;
 
@@ -11,7 +11,7 @@ internal sealed class InteractionUnitCustomIcon : CustomHierarchyIcon<Interactio
     {
         activeIcon = LoadIconTex("Editor/GameFlow/signal_obj_active");
         inactiveIcon = LoadIconTex("Editor/GameFlow/signal_obj_inactive");
-        new InteractionUnitCustomIcon();
+        new InteractionNodeCustomIcon();
     }
 
     protected override Texture2D GetIconTex(InteractionNode t)

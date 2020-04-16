@@ -22,7 +22,7 @@ namespace GameFlow
             if (_header != null) return _header;
             Transform parent = transform.parent;
             if (parent == null)
-                throw new Exception("InteractionUnit should have a parent GameObject.");
+                throw new Exception("InteractionNode should have a parent GameObject.");
             _header = parent.GetComponent<InteractionHeader>();
             if (_header == null) _header = parent.gameObject.AddComponent<InteractionHeader>();
             return _header;
