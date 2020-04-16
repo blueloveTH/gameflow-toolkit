@@ -89,16 +89,19 @@ namespace GameFlow
         {
             if (signal.isBlocked || !isActiveAndEnabled) return;
             if (!CanReceive(signal)) return;
-            if (enableDebugInfo) print(signal.Summary(this));
 
             foreach (var item in staticSlots)
                 if (item.Key.CanReceive(signal))
+                {
+                    if (enableDebugInfo) print(signal.Summary(this));
                     item.Value.Invoke(this, new object[] { signal });
+                }
 
             foreach (var item in slotDic)
             {
                 if (item.Value != null && !item.Value.Invoke(signal))
                     continue;
+                if (enableDebugInfo) print(signal.Summary(this));
                 item.Key.Invoke(signal);
             }
         }
