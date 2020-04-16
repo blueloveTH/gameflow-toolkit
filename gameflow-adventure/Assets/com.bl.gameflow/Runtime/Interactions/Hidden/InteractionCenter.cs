@@ -31,7 +31,7 @@ namespace GameFlow
             if (metaSlots.src != src)
                 throw new InvalidOperationException("A signal can only be operatored by its owner.");
 
-            signal.isGlobal = true;
+            //signal.isGlobal = true;
             HashSet<MetaSlot> nullSlots = new HashSet<MetaSlot>();
             foreach (var s in metaSlots.mSlots)
             {

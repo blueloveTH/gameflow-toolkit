@@ -3,9 +3,10 @@
 namespace GameFlow
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class SlotFunction : Attribute
+    public sealed class SlotFunction : Attribute
     {
         private string signalName;
+        //private Type signalType;
 
         /// <summary>
         /// 

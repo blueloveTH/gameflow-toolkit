@@ -17,10 +17,6 @@ namespace GameFlow
         /// 指示信号是否已被屏蔽失效
         /// </summary>
         public bool isBlocked { get; private set; }
-        /// <summary>
-        /// 指示是否是一个全局广播信号
-        /// </summary>
-        public bool isGlobal { get; internal set; }
 
         private Dictionary<string, object> data;
 
@@ -30,6 +26,8 @@ namespace GameFlow
             this.name = name;
             this.src = src;
             data = new Dictionary<string, object>();
+
+            isBlocked = false;
         }
 
         /// <summary>
@@ -82,7 +80,6 @@ namespace GameFlow
             txt += "[SIGNAL] " + name + "\n";
             txt += src.unitName + " => " + target.unitName + "\n";
             txt += "isBlocked: " + isBlocked.ToString() + "\n";
-            txt += "isGlobal: " + isGlobal.ToString() + "\n";
             txt += "data: \n";
             foreach (var item in data)
                 txt += string.Format("({0}, {1})\n", item.Key, item.Value);
