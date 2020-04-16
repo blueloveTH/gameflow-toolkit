@@ -12,7 +12,7 @@ namespace GameFlow
         /// <summary>
         /// 返回信号的源
         /// </summary>
-        public InteractionUnit src { get; private set; }
+        public InteractionNode src { get; private set; }
         /// <summary>
         /// 指示信号是否已被屏蔽失效
         /// </summary>
@@ -20,7 +20,7 @@ namespace GameFlow
 
         private Dictionary<string, object> data;
 
-        internal Signal(InteractionUnit src, string name)
+        internal Signal(InteractionNode src, string name)
         {
             if (src == null) throw new ArgumentNullException("src");
             this.name = name;
@@ -74,7 +74,7 @@ namespace GameFlow
             return this.name == e.ToStringKey();
         }
 
-        internal string Summary(InteractionUnit target)
+        internal string Summary(InteractionNode target)
         {
             string txt = string.Empty;
             txt += "[SIGNAL] " + name + "\n";

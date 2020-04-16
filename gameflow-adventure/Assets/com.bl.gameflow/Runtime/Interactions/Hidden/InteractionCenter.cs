@@ -11,19 +11,19 @@ namespace GameFlow
         private static InteractionCenter _main;
         public static InteractionCenter main => _main ?? (_main = new InteractionCenter());
 
-        internal void AddSignalInternal(InteractionUnit src, string signalName)
+        internal void AddSignalInternal(InteractionNode src, string signalName)
         {
             metaDic.Add(signalName, new MetaSignal(signalName, src));
         }
 
-        internal void RemoveSignalInternal(InteractionUnit src, string signalName)
+        internal void RemoveSignalInternal(InteractionNode src, string signalName)
         {
             if (metaDic[signalName].src != src)
                 throw new InvalidOperationException("A signal can only be operatored by its owner.");
             metaDic.Remove(signalName);
         }
 
-        internal void EmitInternal(InteractionUnit src, Signal signal)
+        internal void EmitInternal(InteractionNode src, Signal signal)
         {
             var signalName = signal.name;
             var metaSlots = metaDic[signalName];
@@ -31,7 +31,6 @@ namespace GameFlow
             if (metaSlots.src != src)
                 throw new InvalidOperationException("A signal can only be operatored by its owner.");
 
-            //signal.isGlobal = true;
             HashSet<MetaSlot> nullSlots = new HashSet<MetaSlot>();
             foreach (var s in metaSlots.mSlots)
             {

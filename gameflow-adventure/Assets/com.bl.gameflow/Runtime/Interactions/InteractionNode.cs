@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameFlow
 {
-    public abstract class InteractionUnit : MonoBehaviour
+    public abstract class InteractionNode : MonoBehaviour
     {
         /// <summary>
         /// 置为true启动调试信息，将交互细节输出到控制台
@@ -15,7 +15,7 @@ namespace GameFlow
         private InteractionHeader _header;
 
         /// <summary>
-        /// 返回本单元所属的交互头
+        /// 返回节点所属的交互头
         /// </summary>
         public InteractionHeader GetHeader()
         {
@@ -37,9 +37,9 @@ namespace GameFlow
         }
 
         /// <summary>
-        /// 将信号发射到目标交互单元
+        /// 将信号发射到目标交互节点
         /// </summary>
-        protected void Emit(Signal signal, InteractionUnit target)
+        protected void Emit(Signal signal, InteractionNode target)
         {
             if (target == null) return;
             //if (signal.src.GetHeader() == target.GetHeader())
@@ -48,11 +48,11 @@ namespace GameFlow
         }
 
         /// <summary>
-        /// 将信号发射到目标游戏对象，其包含的所有交互单元都会收到这个信号
+        /// 将信号发射到目标游戏对象，其包含的所有交互节点都会收到这个信号
         /// </summary>
         protected void Emit(Signal signal, GameObject target)
         {
-            var units = target.GetComponents<InteractionUnit>();
+            var units = target.GetComponents<InteractionNode>();
             foreach (var item in units)
             {
                 if (signal.isBlocked) break;
@@ -61,7 +61,7 @@ namespace GameFlow
         }
 
         /// <summary>
-        /// 将信号发射到目标交互头，其所属的所有交互单元都会收到这个信号
+        /// 将信号发射到目标交互头，其所属的所有交互节点都会收到这个信号
         /// </summary>
         protected void Emit(Signal signal, InteractionHeader target)
         {
@@ -107,7 +107,7 @@ namespace GameFlow
         }
 
         /// <summary>
-        /// 用于过滤本单元所接收的所有信号，默认返回true
+        /// 用于过滤本节点所接收的所有信号，默认返回true
         /// </summary>
         protected virtual bool CanReceive(Signal signal)
         {

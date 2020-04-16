@@ -66,18 +66,18 @@ fd.Enter(Colors.Black);
 
 
 
-#### InteractionUnit
+#### InteractionNode
 
 ```c#
 //例：发送者
-public class EmitterUnit : InteractionUnit{
+public class EmitterNode : InteractionNode{
     void OnTriggerEnter2D(Collider2D c2d){
         Emit(Signal("on_touch"), c2d.gameObject);
     }
 }
 
 //例：接收者
-public class SlotUnit : InteractionUnit{
+public class SlotNode : InteractionNode{
     [SlotFunction("on_touch")]
     void OnSignal(){
         //signal received
