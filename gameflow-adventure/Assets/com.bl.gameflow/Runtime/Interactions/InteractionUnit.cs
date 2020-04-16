@@ -42,8 +42,8 @@ namespace GameFlow
         protected void Emit(Signal signal, InteractionUnit target)
         {
             if (target == null) return;
-            if (signal.src.GetHeader() == target.GetHeader())
-                return;
+            //if (signal.src.GetHeader() == target.GetHeader())
+            //    return;
             target.OnSignalInternal(signal);
         }
 
