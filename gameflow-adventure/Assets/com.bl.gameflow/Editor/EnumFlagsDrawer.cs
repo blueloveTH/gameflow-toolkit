@@ -2,8 +2,8 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(MaskIntAttribute))]
-public class MaskIntDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
+public class EnumFlagsDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
@@ -17,7 +17,7 @@ public class MaskIntDrawer : PropertyDrawer
             position = EditorGUI.PrefixLabel(position, new GUIContent(property.displayName));
 
             var e = EditorGUI.EnumFlagsField(position,
-                 (Enum)Enum.ToObject((attribute as MaskIntAttribute).enumType, property.intValue));
+                 (Enum)Enum.ToObject((attribute as EnumFlagsAttribute).enumType, property.intValue));
             property.intValue = Convert.ToInt32(e);
         }
         else
