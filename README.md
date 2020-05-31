@@ -87,14 +87,6 @@ public class SlotNode : InteractionNode{
 
 
 
-#### BehaviourTree
-
-```c#
-
-```
-
-
-
 ## 获取支持
 
 如果您在使用中遇到问题，可通过如下方式联系我：
