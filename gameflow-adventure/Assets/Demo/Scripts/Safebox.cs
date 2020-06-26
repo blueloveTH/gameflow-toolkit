@@ -39,8 +39,8 @@ public class Safebox : MonoBehaviour
 
     public void Input(string str)
     {
-        var t = fd.currentNode?.FindArc((arc) => arc.GetData<string>("code") == str);
-        if (t != null) fd.Enter(t.target);
+        var arc = fd.currentNode?.FindArc((a) => a.GetData<string>("code") == str);
+        if (arc != null) fd.Enter(arc.target);
         else fd.Enter(Flag.Failure);
     }
 }
