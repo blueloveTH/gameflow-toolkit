@@ -14,7 +14,7 @@ A Designer-Oriented Flow-Control Toolkit for Game Mechanism in Unity.
 
 ## 安装与配置
 
-([最新版本](https://github.com/blueloveTH/gameflow-toolkit/releases/tag/latest_release))  ([所有版本](https://github.com/blueloveTH/gameflow-toolkit/releases))
+([最新版本](https://github.com/blueloveTH/gameflow-toolkit/releases/tag/0.6.0a))  ([所有版本](https://github.com/blueloveTH/gameflow-toolkit/releases))
 
 通过upm安装：
 
@@ -89,13 +89,8 @@ public class SlotNode : InteractionNode{
 
 ## 获取支持
 
-如果您在使用中遇到问题，可通过如下方式联系我：
+如果您在使用中遇到问题，可通过如下方式联系作者：
 
 + QQ：2551900781
 
 + Email： blueloveTH@foxmail.com
-
-
-
-## 致谢
-
