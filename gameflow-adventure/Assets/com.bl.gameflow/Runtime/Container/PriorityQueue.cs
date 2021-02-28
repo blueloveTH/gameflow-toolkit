@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 namespace GameFlow
@@ -13,12 +12,12 @@ namespace GameFlow
         public void Push(T item)
         {
             heap.Add(item);
-            Heap_Adjust_Up(heap.Count - 1);
+            HeapAdjustUp(heap.Count - 1);
         }
 
         private int property = 1;
         private IComparer<T> m_comparer;
-        private void Heap_Adjust_Up(int index)
+        private void HeapAdjustUp(int index)
         {
             while (index > 0)
             {
@@ -36,7 +35,7 @@ namespace GameFlow
             }
         }
 
-        private void Heap_Adjust_Down(int index)
+        private void HeapAdjustDown(int index)
         {
             int size = heap.Count;
             int leftChild, rightChild, biggerChild;
@@ -84,7 +83,7 @@ namespace GameFlow
             T t = Top();
             heap[0] = heap[heap.Count - 1];
             heap.RemoveAt(heap.Count - 1);
-            Heap_Adjust_Down(0);
+            HeapAdjustDown(0);
             return t;
         }
 
@@ -93,14 +92,14 @@ namespace GameFlow
             return heap.Contains(item);
         }
 
-        public IEnumerator GetEnumerator()
-        {
-            return ((IEnumerable)heap).GetEnumerator();
-        }
-
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
             return ((IEnumerable<T>)heap).GetEnumerator();
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 

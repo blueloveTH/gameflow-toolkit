@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace GameFlow
 {
+    /// <summary>
+    /// StandardTrie (Untested)
+    /// </summary>
     public sealed class StandardTrie<T>
     {
         public sealed class Leaf

@@ -1,38 +1,37 @@
 ﻿namespace GameFlow
 {
     /// <summary>
-    /// 任务序列：继承自TaskList，新增在指定时间点插入新任务的功能
+    /// 任务序列：通过时间轴插入任务
     /// </summary>
-    public class TaskSequence : TaskList
+    public class TaskSequence : TaskSet
     {
-        private TaskSet seqBody;
+        private bool useUnscaledTime;
 
-        public TaskSequence()
+        public TaskSequence(bool useUnscaledTime = false)
         {
-            seqBody = new TaskSet();
-            Add(seqBody);
+            this.useUnscaledTime = useUnscaledTime;
         }
 
         /// <summary>
         /// 在指定时间点插入新任务
         /// <code>Insert(0.5f, t); //任务t在序列开始后的0.5秒后被执行</code>
         /// </summary>
-        public void Insert(float atPosition, Task task)
+        public void Insert(float atTime, Task task)
         {
             TaskList list = new TaskList();
-            list.Add(Task.Delay(atPosition));
+            list.Add(Delay(atTime, useUnscaledTime));
             list.Add(task);
 
-            seqBody.Add(list);
+            Add(list);
         }
 
         /// <summary>
-        /// 在指定时间点插入函数回调
+        /// 在指定时间点插入无参数Lambda表达式
         /// <code>Insert(0.5f, ()=>Debug.Log("123")); //在序列开始0.5秒后打印"123"</code>
         /// </summary>
-        public void Insert(float atPosition, System.Action action)
+        public void Insert(float atTime, System.Action lambda)
         {
-            Insert(atPosition, Task.DoAction(action));
+            Insert(atTime, Lambda(lambda));
         }
     }
 }

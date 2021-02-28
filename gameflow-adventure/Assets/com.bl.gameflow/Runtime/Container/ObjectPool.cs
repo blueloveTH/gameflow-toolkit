@@ -46,7 +46,7 @@ namespace GameFlow
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable<T>)buffer).GetEnumerator();
+            return GetEnumerator();
         }
 
         public int Count { get { return buffer.Count; } }

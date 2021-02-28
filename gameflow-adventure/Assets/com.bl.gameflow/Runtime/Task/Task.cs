@@ -8,18 +8,10 @@ namespace GameFlow
 
     public enum TaskState
     {
-        /// <summary>
-        /// Task对象已就绪，可以执行
-        /// </summary>
         Ready,
-        /// <summary>
-        /// Task对象正在运行
-        /// </summary>
         Playing,
-        /// <summary>
-        /// Task对象已结束
-        /// </summary>
-        Ended
+        Completed,
+        Killed,
     }
 
     internal sealed class TaskOwnerBehaviour : MonoBehaviour { }
@@ -37,8 +29,10 @@ namespace GameFlow
         }
 
         private static TaskOwnerBehaviour _defaultOwner;
-        internal static MonoBehaviour defaultOwner {
-            get {
+        internal static MonoBehaviour defaultOwner
+        {
+            get
+            {
                 if (_defaultOwner == null)
                 {
                     GameObject obj = new GameObject("Task Owner (Default)");
@@ -55,75 +49,47 @@ namespace GameFlow
         /// <summary>
         /// 从Task.owner启动一个Unity协程，该协程在Task对象结束后将被自动回收
         /// </summary>
-        protected void StartCoroutine(IEnumerator routine)
+        protected Coroutine StartCoroutine(IEnumerator routine)
         {
-            coroutines.Add(owner.StartCoroutine(routine));
+            var coroutine = owner.StartCoroutine(routine);
+            if (coroutine != null) coroutines.Add(coroutine);
+            return coroutine;
         }
 
         private void StopAllCoroutines()
         {
-            foreach (var item in coroutines)
-                if (item != null) owner.StopCoroutine(item);
+            coroutines.ForEach((c) => owner.StopCoroutine(c));
             coroutines.Clear();
         }
 
         #endregion
 
-
         #region Lifecycle
-        /// <summary>
-        /// 当Play()被调用时触发此事件
-        /// </summary>
         public event TaskCallback onPlay;
-        /// <summary>
-        /// 当Complete()被调用时触发此事件
-        /// </summary>
         public event TaskCallback onComplete;
-        /// <summary>
-        /// 当Kill()被调用时触发此事件
-        /// </summary>
         public event TaskCallback onKill;
-        /// <summary>
-        /// 当Kill()或Complete()被调用时触发此事件
-        /// </summary>
         public event TaskCallback onEnd;
 
-        /// <summary>
-        /// 当Task对象运行时每帧触发此事件（使用Coroutine）
-        /// </summary>
         public event TaskCallback onUpdate;
 
-        /// <summary>
-        /// 返回Task对象的当前状态
-        /// </summary>
         public TaskState state { get; private set; } = TaskState.Ready;
+        public bool IsCompleted => state == TaskState.Completed;
+        public bool IsEnded => state == TaskState.Completed || state == TaskState.Killed;
 
-        /// <summary>
-        /// 指示Task对象是否完成，如果以Kill()方式结束则为false
-        /// </summary>
-        public bool IsCompleted { get; private set; }
-
-        /// <summary>
-        /// 执行Task对象
-        /// </summary>
         public void Play()
         {
             if (state != TaskState.Ready) return;
             state = TaskState.Playing;
-
             if (onUpdate != null) StartCoroutine(HandleUpdateCallback());
 
             OnPlay();
         }
 
-        /// <summary>
-        /// 终止Task对象的执行
-        /// </summary>
         public void Kill()
         {
-            if (state == TaskState.Ended && !IsCompleted) return;
-            state = TaskState.Ended;
+            if (state == TaskState.Killed) return;
             StopAllCoroutines();
+            state = TaskState.Killed;
 
             OnKill();
         }
@@ -140,16 +106,11 @@ namespace GameFlow
             }
         }
 
-        /// <summary>
-        /// 将正在运行的任务置为完成状态
-        /// </summary>
         protected void Complete()
         {
             if (state != TaskState.Playing) return;
-            state = TaskState.Ended;
             StopAllCoroutines();
-
-            IsCompleted = true;
+            state = TaskState.Completed;
 
             OnComplete();
         }
@@ -158,13 +119,11 @@ namespace GameFlow
         {
             onPlay?.Invoke();
         }
-
         protected virtual void OnComplete()
         {
             onComplete?.Invoke();
             onEnd?.Invoke();
         }
-
         protected virtual void OnKill()
         {
             onKill?.Invoke();
@@ -192,19 +151,11 @@ namespace GameFlow
         }
 
         /// <summary>
-        /// 创建任务：等待指定的事件发生（实验性功能，Android平台暂不可用）
+        /// 创建任务：调用无参数Lambda表达式
         /// </summary>
-        //public static WaitEventTask WaitEvent<T>(System.Func<T> objGetter, string eventName) where T : class
-        //{
-        //    return new WaitEventTask(objGetter, typeof(T), eventName);
-        //}
-
-        /// <summary>
-        /// 创建任务：调用一个无参方法（将普通函数转换为Task对象）
-        /// </summary>
-        public static ActionTask DoAction(System.Action action)
+        public static LambdaTask Lambda(System.Action lambda)
         {
-            return new ActionTask(action);
+            return new LambdaTask(lambda);
         }
 
         /// <summary>
@@ -223,10 +174,6 @@ namespace GameFlow
             return new DelayFramesTask(frameCount);
         }
 
-        //public static WWWTask WWWTask(string url)
-        //{
-        //    return new WWWTask(url);
-        //}
         #endregion
     }
 
@@ -250,45 +197,26 @@ namespace GameFlow
             return task.state == TaskState.Playing;
         }
 
-        /// <summary>
-        /// 设置Task对象所属的MonoBehaviour
-        /// </summary>
         public static T SetOwner<T>(this T task, MonoBehaviour owner) where T : Task
         {
             task.owner = owner;
             return task;
         }
-
-        /// <summary>
-        /// 为Task对象增加onComplete回调（链式风格）
-        /// </summary>
         public static T OnComplete<T>(this T task, TaskCallback callback) where T : Task
         {
             task.onComplete += callback;
             return task;
         }
-
-        /// <summary>
-        /// 为Task对象增加onPlay回调（链式风格）
-        /// </summary>
         public static T OnPlay<T>(this T task, TaskCallback callback) where T : Task
         {
             task.onPlay += callback;
             return task;
         }
-
-        /// <summary>
-        /// 为Task对象增加onKill回调（链式风格）
-        /// </summary>
         public static T OnKill<T>(this T task, TaskCallback callback) where T : Task
         {
             task.onKill += callback;
             return task;
         }
-
-        /// <summary>
-        /// 为Task对象增加onEnd回调（链式风格）
-        /// </summary>
         public static T OnEnd<T>(this T task, TaskCallback callback) where T : Task
         {
             task.onEnd += callback;

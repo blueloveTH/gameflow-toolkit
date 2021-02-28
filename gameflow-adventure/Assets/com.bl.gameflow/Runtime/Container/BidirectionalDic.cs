@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameFlow
 {
-    public sealed class DualMap<TypeA, TypeB> : IEnumerable<KeyValuePair<TypeA, TypeB>>, IEnumerable
+    public sealed class BidirectionalDic<TypeA, TypeB> : IEnumerable<KeyValuePair<TypeA, TypeB>>, IEnumerable
     {
         private Dictionary<TypeA, TypeB> dicA2B = new Dictionary<TypeA, TypeB>();
         private Dictionary<TypeB, TypeA> dicB2A = new Dictionary<TypeB, TypeA>();
@@ -32,14 +32,6 @@ namespace GameFlow
             return true;
         }
 
-        public int Count => dicA2B.Count;
-
-        public void Clear()
-        {
-            dicA2B.Clear();
-            dicB2A.Clear();
-        }
-
         public bool RemoveB(TypeB b)
         {
             if (!dicB2A.ContainsKey(b)) return false;
@@ -51,6 +43,14 @@ namespace GameFlow
         public TypeB A2B(TypeA a) { return dicA2B[a]; }
         public TypeA B2A(TypeB b) { return dicB2A[b]; }
 
+        public int Count => dicA2B.Count;
+
+        public void Clear()
+        {
+            dicA2B.Clear();
+            dicB2A.Clear();
+        }
+
         public IEnumerator<KeyValuePair<TypeA, TypeB>> GetEnumerator()
         {
             return ((IEnumerable<KeyValuePair<TypeA, TypeB>>)dicA2B).GetEnumerator();
@@ -58,7 +58,7 @@ namespace GameFlow
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable<KeyValuePair<TypeA, TypeB>>)dicA2B).GetEnumerator();
+            return GetEnumerator();
         }
     }
 }

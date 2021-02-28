@@ -19,8 +19,10 @@ namespace GameFlow
         /// <summary>
         /// 返回当前正在运行的任务
         /// </summary>
-        public Task current {
-            get {
+        public Task current
+        {
+            get
+            {
                 if (index == -1) return null;
                 else return members[index];
             }
@@ -30,47 +32,27 @@ namespace GameFlow
 
         public TaskList() { }
 
-        /// <summary>
-        /// 在列表末尾追加一个新任务
-        /// </summary>
         public void Add(Task item)
         {
             if (item == null) return;
             members.Add(item);
-            item.onComplete += Item_OnComplete;
+            item.onComplete += NextItem;
         }
 
-        public void Add(System.Action item) { Add(Task.DoAction(item)); }
-
-        public void InsertAt(int index, Task item)
+        public void Add(System.Action lambda)
         {
-            if (item == null) return;
-            members.Insert(index, item);
-            item.onComplete += Item_OnComplete;
-        }
-
-        public void InsertAt(int index, System.Action item) { InsertAt(index, Task.DoAction(item)); }
-
-        public void RemoveAt(int index)
-        {
-            members[index].onComplete -= Item_OnComplete;
-            members.RemoveAt(index);
+            Add(Lambda(lambda));
         }
 
         public bool Remove(Task item)
         {
             int i = members.FindIndex((x) => x == item);
-            if (i == -1) return false;
-            else
+            if (i >= 0)
             {
-                RemoveAt(i);
-                return true;
+                members[i].onComplete -= NextItem;
+                members.RemoveAt(i);
             }
-        }
-
-        private void Item_OnComplete()
-        {
-            NextItem();
+            return i >= 0;
         }
 
         private void NextItem()
@@ -84,14 +66,13 @@ namespace GameFlow
         protected override void OnPlay()
         {
             base.OnPlay();
-            index = -1;
             NextItem();
         }
 
         protected override void OnKill()
         {
-            base.OnKill();
             if (index < Count && current != null) current.Kill();
+            base.OnKill();
         }
 
         public IEnumerator<Task> GetEnumerator()
@@ -101,7 +82,7 @@ namespace GameFlow
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable<Task>)members).GetEnumerator();
+            return GetEnumerator();
         }
     }
 }

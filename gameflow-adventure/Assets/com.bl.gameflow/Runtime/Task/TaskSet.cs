@@ -18,44 +18,45 @@ namespace GameFlow
         /// <summary>
         /// 返回已经完成的子任务个数
         /// </summary>
-        public int completedCnt { get; private set; }
+        public int completedCount { get; private set; }
 
         /// <summary>
         /// 向集合添加一个新任务
         /// </summary>
         public void Add(Task item)
         {
+            if (item == null) return;
             members.Add(item);
-            item.onComplete += Item_OnComplete;
+            item.onComplete += CheckComplete;
         }
 
-        public void Add(System.Action item) { Add(Task.DoAction(item)); }
+        public void Add(System.Action lambda) { Add(Lambda(lambda)); }
 
         public void Remove(Task item)
         {
             members.Remove(item);
-            item.onComplete -= Item_OnComplete;
+            item.onComplete -= CheckComplete;
         }
 
         public TaskSet() { }
 
-        private void Item_OnComplete()
+        private void CheckComplete()
         {
-            completedCnt++;
-            if (completedCnt == Count) Complete();
+            completedCount++;
+            if (completedCount == Count) Complete();
         }
 
         protected override void OnPlay()
         {
             base.OnPlay();
             if (Count == 0) Complete();
-            foreach (var item in members) item.Play();
+            else foreach (var item in members) item.Play();
         }
 
         protected override void OnKill()
         {
-            base.OnKill();
             foreach (var item in members) item.Kill();
+            base.OnKill();
         }
 
         public IEnumerator<Task> GetEnumerator()
@@ -65,7 +66,7 @@ namespace GameFlow
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator() as IEnumerator;
+            return GetEnumerator();
         }
     }
 }

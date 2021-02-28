@@ -3,11 +3,6 @@ using UnityEngine;
 
 public static class TransformEx
 {
-    public static void SetUniformScale(this Transform t, float s)
-    {
-        t.localScale = Vector3.one * s;
-    }
-
     public static void SetRootPosition(this Transform t, Vector3 p)
     {
         Vector3 dv = p - t.position;
@@ -77,18 +72,20 @@ public static class TransformEx
         if (c.parent != null) return c.parent.GetComponent<T>();
         return null;
     }
-    public static bool Contains(this RectTransform rt, Vector2 pos)
-    {
-        Rect rect = rt.rect;
-        rect.position += (Vector2)rt.position;
-        return rect.Contains(pos);
-    }
-    public static void SwapChild(this Transform t, int i, int j)
+
+    public static void SwapChildren(this Transform t, int i, int j)
     {
         if (i == j) return;
         var ti = t.GetChild(i);
         var tj = t.GetChild(j);
         tj.SetSiblingIndex(i);
         ti.SetSiblingIndex(j);
+    }
+
+    public static bool Contains(this RectTransform rt, Vector2 pos)
+    {
+        Rect rect = rt.rect;
+        rect.position += (Vector2)rt.position;
+        return rect.Contains(pos);
     }
 }

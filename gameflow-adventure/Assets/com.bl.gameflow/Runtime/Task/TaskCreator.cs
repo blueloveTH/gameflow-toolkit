@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace GameFlow
 {
+    /// <summary>
+    /// Task对象不能复制，因此设置一个创建器，需要时创建
+    /// </summary>
     public class TaskCreator
     {
         private List<System.Func<Task>> funcs = new List<Func<Task>>();
