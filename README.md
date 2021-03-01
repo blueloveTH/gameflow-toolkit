@@ -13,7 +13,7 @@ A Lightweight Flow-Control Toolkit for Game Mechanism in Unity.
 
 ## 安装与配置
 
-([最新版本](https://github.com/blueloveTH/gameflow-toolkit/releases/tag/0.6.0a))  ([所有版本](https://github.com/blueloveTH/gameflow-toolkit/releases))
+([最新版本](https://github.com/blueloveTH/gameflow-toolkit/releases/latest))
 
 通过upm安装：
 
