@@ -13,18 +13,10 @@ namespace GameFlow
             public BranchNode parent { get; private set; }
 
             /// <summary>
-            /// Calculates the key recursively(Not Implemented)
+            /// Calculates the key recursively
             /// </summary>
             public string key {
                 get {
-                    //char[] array = new char[depth];
-                    //BranchNode current = parent;
-
-                    //for(int i = array.Length - 1; i >= 0; i--)
-                    //{
-                    //    array[i] = current.c;
-                    //    current=current.
-                    //}
                     throw new NotImplementedException();
                 }
             }

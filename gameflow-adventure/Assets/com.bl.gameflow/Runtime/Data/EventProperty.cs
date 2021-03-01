@@ -2,12 +2,12 @@
 
 namespace GameFlow
 {
-    public class Property<T>
+    public sealed class EventProperty<T>
     {
         public T value { get; private set; }
         public event System.Action onValueChange;
 
-        public Property(T value)
+        public EventProperty(T value)
         {
             this.value = value;
         }
@@ -19,7 +19,7 @@ namespace GameFlow
             onValueChange?.Invoke();
         }
 
-        public static implicit operator T(Property<T> prop)
+        public static implicit operator T(EventProperty<T> prop)
         {
             return prop.value;
         }
@@ -52,7 +52,7 @@ namespace GameFlow
                 oldValue = value;
                 return true;
             }
-            else return false;
+            return false;
         }
     }
 

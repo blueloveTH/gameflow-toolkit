@@ -6,29 +6,29 @@ namespace GameFlow
     public sealed class Signal
     {
         public string name { get; private set; }
-        public InteractionNode source { get; private set; }
+        public InteractiveBehaviour source { get; private set; }
         public bool isBlocked { get; private set; }
         public bool debugMode { get; set; } = false;
 
-        private Dictionary<string, object> data;
+        private Dictionary<string, dynamic> data;
 
-        internal Signal(InteractionNode source, string name)
+        internal Signal(InteractiveBehaviour source, string name)
         {
             if (source == null) throw new ArgumentNullException("source");
             this.name = name;
             this.source = source;
-            data = new Dictionary<string, object>();
+            data = new Dictionary<string, dynamic>();
 
             isBlocked = false;
         }
 
-        public object this[string key]
+        public dynamic this[string key]
         {
             get { return data[key]; }
             set { data[key] = value; }
         }
 
-        public Signal AddData(string key, object value)
+        public Signal AddData(string key, dynamic value)
         {
             data.Add(key, value);
             return this;
@@ -55,7 +55,7 @@ namespace GameFlow
             return this.name == e.ToStringKey();
         }
 
-        internal string Summary(InteractionNode target)
+        internal string Summary(InteractiveBehaviour target)
         {
             string txt = string.Empty;
             txt += "[SIGNAL] " + name + "\n";

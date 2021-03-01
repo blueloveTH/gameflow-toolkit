@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameFlow;
 
-public class TestNode : InteractionNode
+public class TestNode : InteractiveBehaviour
 {
     void Start()
     {

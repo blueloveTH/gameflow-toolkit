@@ -12,7 +12,7 @@ public class MutexLight : MonoBehaviour
         foreach (var item in collection)
         {
             diagrams.Add(item.fd);
-            item.fd.onCurrentNodeChange += Fd_OnCurrentNodeChange;
+            item.fd.onNodeChange += Fd_OnCurrentNodeChange;
         }
     }
 

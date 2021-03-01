@@ -19,9 +19,6 @@ namespace GameFlow
     public abstract class Task
     {
         #region Mono functions
-        /// <summary>
-        /// Task对象的所有者，默认为全局所有
-        /// </summary>
         public MonoBehaviour owner { get; internal set; }
         public Task()
         {
@@ -44,7 +41,7 @@ namespace GameFlow
             }
         }
 
-        List<Coroutine> coroutines = new List<Coroutine>();
+        private List<Coroutine> coroutines = new List<Coroutine>();
 
         /// <summary>
         /// 从Task.owner启动一个Unity协程，该协程在Task对象结束后将被自动回收
@@ -175,6 +172,15 @@ namespace GameFlow
         }
 
         #endregion
+
+        public virtual Task Copy()
+        {
+            if (state != TaskState.Ready)
+                throw new System.Exception("Cannot copy a task not at ready state.");
+            var task = MemberwiseClone() as Task;
+            task.coroutines = new List<Coroutine>();
+            return task;
+        }
     }
 
     public static class TaskEx

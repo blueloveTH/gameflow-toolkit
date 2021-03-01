@@ -27,7 +27,6 @@ namespace GameFlow
         {
             if (item == null) return;
             members.Add(item);
-            item.onComplete += CheckComplete;
         }
 
         public void Add(System.Action lambda) { Add(Lambda(lambda)); }
@@ -35,7 +34,6 @@ namespace GameFlow
         public void Remove(Task item)
         {
             members.Remove(item);
-            item.onComplete -= CheckComplete;
         }
 
         public TaskSet() { }
@@ -50,7 +48,13 @@ namespace GameFlow
         {
             base.OnPlay();
             if (Count == 0) Complete();
-            else foreach (var item in members) item.Play();
+            else
+            {
+                foreach (var item in members)
+                    item.onComplete += CheckComplete;
+                foreach (var item in members)
+                    item.Play();
+            }
         }
 
         protected override void OnKill()
@@ -67,6 +71,28 @@ namespace GameFlow
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public override Task Copy()
+        {
+            TaskSet obj = base.Copy() as TaskSet;
+            obj.members = new HashSet<Task>();
+
+            foreach (var m in members)
+                obj.members.Add(m.Copy());
+            return obj;
+        }
+
+        public static TaskSet operator +(TaskSet s, Task item)
+        {
+            s.Add(item);
+            return s;
+        }
+
+        public static TaskSet operator -(TaskSet s, Task item)
+        {
+            s.Remove(item);
+            return s;
         }
     }
 }

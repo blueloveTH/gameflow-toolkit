@@ -12,7 +12,7 @@ public class Safebox : MonoBehaviour
 
     void Start()
     {
-        fd = FlowMachine.CreateByEnum<Flag>();
+        fd = FlowMachine.FromEnum<Flag>();
 
         fd[Flag.Success].onEnter += (x) => fd.isLocked = true;
 
@@ -22,24 +22,22 @@ public class Safebox : MonoBehaviour
         var t24 = fd.Connect(Flag.Stage2, Flag.Stage4).AddData("code", "2R");
         var t45 = fd.Connect(Flag.Stage4, Flag.Success).AddData("code", "3L");
 
-        fd.onCurrentNodeChange += (x) => print(x.name + " (OnNodeChange)");
+        fd.onNodeChange += (x) => print(x.name + " (OnNodeChange)");
 
         foreach (var item in fd)
         {
             item.onEnter += (x) => print(x.name + " (OnEnter)");
             item.onExit += (x) => print(x.name + " (OnExit)");
 
-            item.enterTaskCreator +=
-                () => Task.Delay(2f).OnComplete(() => print("enter task end."));
-            item.exitTaskCreator +=
-                () => Task.Delay(2f).OnComplete(() => print("exit task end."));
+            item.tasksOnEnter += Task.Delay(2f).OnComplete(() => print("enter task end."));
+            item.tasksOnExit += Task.Delay(2f).OnComplete(() => print("exit task end."));
         }
         fd.Enter(Flag.Stage1);
     }
 
     public void Input(string str)
     {
-        var arc = fd.currentNode?.FindArc((a) => a.GetData<string>("code") == str);
+        var arc = fd.currentNode?.FindArc((a) => a["code"] == str);
         if (arc != null) fd.Enter(arc.target);
         else fd.Enter(Flag.Failure);
     }

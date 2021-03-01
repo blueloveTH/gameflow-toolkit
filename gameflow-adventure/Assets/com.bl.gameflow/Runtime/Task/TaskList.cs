@@ -11,14 +11,7 @@ namespace GameFlow
         private int index = -1;
         private List<Task> members = new List<Task>();
 
-        /// <summary>
-        /// 返回包含子任务的个数
-        /// </summary>
         public int Count { get { return members.Count; } }
-
-        /// <summary>
-        /// 返回当前正在运行的任务
-        /// </summary>
         public Task current
         {
             get
@@ -36,7 +29,6 @@ namespace GameFlow
         {
             if (item == null) return;
             members.Add(item);
-            item.onComplete += NextItem;
         }
 
         public void Add(System.Action lambda)
@@ -47,11 +39,7 @@ namespace GameFlow
         public bool Remove(Task item)
         {
             int i = members.FindIndex((x) => x == item);
-            if (i >= 0)
-            {
-                members[i].onComplete -= NextItem;
-                members.RemoveAt(i);
-            }
+            if (i >= 0) members.RemoveAt(i);
             return i >= 0;
         }
 
@@ -66,6 +54,9 @@ namespace GameFlow
         protected override void OnPlay()
         {
             base.OnPlay();
+
+            foreach (var item in members)
+                item.onComplete += NextItem;
             NextItem();
         }
 
@@ -83,6 +74,28 @@ namespace GameFlow
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public override Task Copy()
+        {
+            TaskList obj = base.Copy() as TaskList;
+            obj.members = new List<Task>();
+
+            foreach (var m in members)
+                obj.members.Add(m.Copy());
+            return obj;
+        }
+
+        public static TaskList operator +(TaskList s, Task item)
+        {
+            s.Add(item);
+            return s;
+        }
+
+        public static TaskList operator -(TaskList s, Task item)
+        {
+            s.Remove(item);
+            return s;
         }
     }
 }

@@ -17,20 +17,23 @@ namespace GameFlow
         }
     }
 
-    public abstract class InteractionNode : MonoBehaviour
+    [Obsolete("This class has been renamed. Use `InteractiveBehaviour` instead.")]
+    public abstract class InteractionNode : InteractiveBehaviour { }
+
+    public abstract class InteractiveBehaviour : MonoBehaviour
     {
         public bool debugMode { get; set; } = false;
 
         private List<SlotInfo> _slotInfos = null;
         protected List<SlotInfo> slotInfos => _slotInfos ?? (_slotInfos = GetStaticSlots());
 
-        protected void Emit(Signal signal, InteractionNode target)
+        protected void Emit(Signal signal, InteractiveBehaviour target)
         {
             if (target == null) return;
             target.OnSignalInternal(signal);
         }
 
-        protected void Emit(Signal signal, InteractionNode[] targets)
+        protected void Emit(Signal signal, InteractiveBehaviour[] targets)
         {
             foreach (var nd in targets)
             {
@@ -41,7 +44,7 @@ namespace GameFlow
 
         protected void Emit(Signal signal, GameObject go)
         {
-            Emit(signal, go.GetComponents<InteractionNode>());
+            Emit(signal, go.GetComponents<InteractiveBehaviour>());
         }
 
         public void AddSlot(Action<Signal> slot, Func<Signal, bool> filter = null)
