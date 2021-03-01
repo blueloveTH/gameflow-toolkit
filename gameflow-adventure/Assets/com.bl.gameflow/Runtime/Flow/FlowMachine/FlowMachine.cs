@@ -4,17 +4,11 @@ using System.Collections.Generic;
 
 namespace GameFlow
 {
-    /// <summary>
-    /// 流程图：具有状态节点和有向边
-    /// </summary>
-    public sealed class FlowDiagram : IEnumerable<FlowNode>
+    public sealed class FlowMachine : IEnumerable<FlowNode>
     {
         private Dictionary<string, FlowNode> nodes = new Dictionary<string, FlowNode>();
         private TaskList currentTask;
 
-        /// <summary>
-        /// 按名称索引节点
-        /// </summary>
         public FlowNode this[string name] {
             get {
                 FlowNode value;
@@ -24,22 +18,28 @@ namespace GameFlow
             }
         }
 
+        public FlowArc Connect(FlowNode src, FlowNode dest)
+        {
+            return src.AddArc(dest);
+        }
+
+        public FlowArc Connect(string src, string dest)
+        {
+            return Connect(this[src], this[dest]);
+        }
+
+        public FlowArc Connect(System.Enum src, System.Enum dest)
+        {
+            return Connect(this[src], this[dest]);
+        }
+
         public FlowNode this[System.Enum e] => this[e.ToStringKey()];
 
-        /// <summary>
-        /// 锁定标记，置为true时禁止切换节点
-        /// </summary>
         public bool isLocked { get; set; } = false;
-        /// <summary>
-        /// 当前节点改变时，触发此事件
-        /// </summary>
         public event System.Action<FlowNode> onCurrentNodeChange;
-        /// <summary>
-        /// 返回当前节点
-        /// </summary>
         public FlowNode currentNode { get; private set; }
 
-        public FlowDiagram() { }
+        public FlowMachine() { }
 
         /// <summary>
         /// 退出当前节点，进入新状态节点
@@ -135,9 +135,9 @@ namespace GameFlow
         /// <summary>
         /// 创建二值图，该图等价于开关
         /// </summary>
-        public static FlowDiagram BinaryDiagram()
+        public static FlowMachine BinaryDiagram()
         {
-            var fd = new FlowDiagram();
+            var fd = new FlowMachine();
             FlowNode offNode = fd.CreateNode("0");
             FlowNode onNode = fd.CreateNode("1");
             onNode.AddArc(offNode);
@@ -148,9 +148,9 @@ namespace GameFlow
         /// <summary>
         /// 使用Enum类型创建流程图
         /// </summary>
-        public static FlowDiagram CreateByEnum<T>() where T : System.Enum
+        public static FlowMachine CreateByEnum<T>() where T : System.Enum
         {
-            FlowDiagram fd = new FlowDiagram();
+            FlowMachine fd = new FlowMachine();
             foreach (var item in System.Enum.GetNames(typeof(T)))
                 fd.CreateNode(typeof(T).Name + "." + item);
             return fd;

@@ -5,7 +5,6 @@ using GameFlow;
 
 public class TestNode : InteractionNode
 {
-    // Start is called before the first frame update
     void Start()
     {
         var s = Signal("123/516").AddData("key", "value").Debug();
@@ -14,7 +13,7 @@ public class TestNode : InteractionNode
         Emit(s, gameObject);
     }
 
-    [SlotMethod("123", asPrefix: true)]
+    [SlotMethod("123")]
     private void OnSignal(Signal s)
     {
         print("");

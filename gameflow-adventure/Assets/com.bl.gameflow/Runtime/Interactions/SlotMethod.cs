@@ -8,7 +8,7 @@ namespace GameFlow
         private string signalName;
         private bool asPrefix;
 
-        public SlotMethod(string signalName, bool asPrefix = false)
+        public SlotMethod(string signalName, bool asPrefix = true)
         {
             this.signalName = signalName;
             this.asPrefix = asPrefix;
@@ -16,8 +16,6 @@ namespace GameFlow
 
         internal bool Filter(Signal signal)
         {
-            if (string.IsNullOrEmpty(signalName)) return true;
-
             if (asPrefix)
                 return signal.name.StartsWith(signalName);
             else

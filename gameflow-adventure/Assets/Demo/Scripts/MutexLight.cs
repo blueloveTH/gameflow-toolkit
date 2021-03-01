@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MutexLight : MonoBehaviour
 {
-    public List<FlowDiagram> diagrams = new List<FlowDiagram>();
+    public List<FlowMachine> diagrams = new List<FlowMachine>();
 
     void Start()
     {
