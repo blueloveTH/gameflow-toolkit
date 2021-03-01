@@ -1,16 +1,15 @@
-# GameFlow工具包（测试版）
+# GameFlow工具包
 
 为同时兼任策划和程序的游戏制作人打造的开发工具包！
 
-A Designer-Oriented Flow-Control Toolkit for Game Mechanism in Unity.
+A Lightweight Flow-Control Toolkit for Game Mechanism in Unity.
 
 <br>
 
-**GameFlow-Toolkit** 是一款用于制作Unity游戏的开源工具包，通过它可以轻松创建和管理游戏机制的交互。gf出自2018年秋季探索（Autumn Quest），作为GameDevKit核心组件，经过多个项目的实践积累，精化并逐步完善。特点如下：
+**GameFlow-Toolkit** 是一款用于制作Unity游戏的工具包，通过它可以轻松创建和管理游戏机制的交互。gf出自2018年秋季探索（Autumn Quest），经过多个项目的实践积累，精化并逐步完善。主要特性如下：
 
-+ 快速实验玩法
++ 快速实现流程控制代码
 + 轻量、极简的API
-+ 初级到进阶适用
 
 ## 安装与配置
 
@@ -24,7 +23,7 @@ A Designer-Oriented Flow-Control Toolkit for Game Mechanism in Unity.
 
 
 
-运行环境：Unity 2018.4及以上
+运行环境：Unity 2019.4及以上
 
 
 
@@ -45,7 +44,7 @@ list.Play();
 
 
 
-#### FlowDiagram
+#### FlowMachine
 
 ```c#
 //例：使用函数式API创建状态图
@@ -54,7 +53,7 @@ public enum Colors{
 }
 
 //定义图和节点
-FlowDiagram fd = FlowDiagram.CreateByEnum<Colors>();
+FlowMachine fd = FlowMachine.FromEnum<Colors>();
 
 //定义回调
 fd[Colors.Black].onEnter += (x) => spRenderer.color = Color.black;
@@ -66,18 +65,18 @@ fd.Enter(Colors.Black);
 
 
 
-#### InteractionNode
+#### InteractiveBehaviour
 
 ```c#
 //例：发送者
-public class EmitterNode : InteractionNode{
+public class EmitterNode : InteractiveBehaviour{
     void OnTriggerEnter2D(Collider2D c2d){
         Emit(Signal("on_touch"), c2d.gameObject);
     }
 }
 
 //例：接收者
-public class SlotNode : InteractionNode{
+public class SlotNode : InteractiveBehaviour{
     [SlotFunction("on_touch")]
     void OnSignal(){
         //signal received
