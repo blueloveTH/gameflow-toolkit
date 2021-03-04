@@ -168,6 +168,22 @@ namespace GameFlow
             return new DelayFramesTask(frameCount);
         }
 
+        /// <summary>
+        /// 创建任务：等待事件的发生
+        /// </summary>
+        public static WaitEventTask WaitEvent(UnityEngine.Events.UnityEvent e)
+        {
+            return new WaitEventTask(e);
+        }
+
+        /// <summary>
+        /// 创建任务：空任务
+        /// </summary>
+        public static EmptyTask Empty()
+        {
+            return new EmptyTask();
+        }
+
         #endregion
 
         public virtual Task Copy()
