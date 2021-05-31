@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameFlow
 {
-    public class SlotInfo
+    public struct SlotInfo
     {
         public Action<Signal> slot;
         public Func<Signal, bool> filter;
@@ -31,6 +31,13 @@ namespace GameFlow
         {
             if (target == null) return;
             target.OnSignalInternal(signal);
+        }
+
+        public virtual GameObject owner => gameObject;
+
+        public T GetCpntInOwner<T>() where T : Component
+        {
+            return owner.GetComponent<T>();
         }
 
         protected void Emit(Signal signal, InteractiveBehaviour[] targets)
@@ -62,7 +69,7 @@ namespace GameFlow
 
         internal void OnSignalInternal(Signal signal)
         {
-            if (signal.isBlocked || !isActiveAndEnabled) return;
+            if (signal.isBlocked || !enabled) return;
             if (!CanReceive(signal)) return;
 
             foreach (var item in slotInfos)
@@ -88,12 +95,6 @@ namespace GameFlow
             return new Signal(this, name);
         }
 
-        protected Signal Signal(System.Enum e)
-        {
-            return new Signal(this, e.ToStringKey());
-        }
-
-
         public string unitName
         {
             get
@@ -114,7 +115,7 @@ namespace GameFlow
                 SlotMethod slm = m.GetCustomAttribute<SlotMethod>(true);
                 if (slm != null)
                 {
-                    Action<Signal> slot = (signal) => SendMessage(m.Name, signal, SendMessageOptions.RequireReceiver);
+                    Action<Signal> slot = (signal) => m.Invoke(this, new object[] { signal });
                     infos.Add(new SlotInfo(slot, slm.Filter));
                 }
             }

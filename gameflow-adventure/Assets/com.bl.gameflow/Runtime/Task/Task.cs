@@ -67,8 +67,6 @@ namespace GameFlow
         public event TaskCallback onKill;
         public event TaskCallback onEnd;
 
-        public event TaskCallback onUpdate;
-
         public TaskState state { get; private set; } = TaskState.Ready;
         public bool IsCompleted => state == TaskState.Completed;
         public bool IsEnded => state == TaskState.Completed || state == TaskState.Killed;
@@ -77,8 +75,6 @@ namespace GameFlow
         {
             if (state != TaskState.Ready) return;
             state = TaskState.Playing;
-            if (onUpdate != null) StartCoroutine(HandleUpdateCallback());
-
             OnPlay();
         }
 
@@ -89,15 +85,6 @@ namespace GameFlow
             state = TaskState.Killed;
 
             OnKill();
-        }
-
-        private IEnumerator HandleUpdateCallback()
-        {
-            while (true)
-            {
-                onUpdate?.Invoke();
-                yield return new WaitForEndOfFrame();
-            }
         }
 
         protected void Complete()
@@ -134,6 +121,14 @@ namespace GameFlow
         public static DelayTask Delay(float duration, bool useUnscaledTime = false)
         {
             return new DelayTask(duration, useUnscaledTime);
+        }
+
+        /// <summary>
+        /// 创建任务：延迟指定时间（秒），并提供进度记录。
+        /// </summary>
+        public static ProgressDelayTask ProgressDelay(float duration, bool useUnscaledTime = false)
+        {
+            return new ProgressDelayTask(duration, useUnscaledTime);
         }
 
         /// <summary>
@@ -176,13 +171,10 @@ namespace GameFlow
             return new WaitEventTask(e);
         }
 
-        /// <summary>
-        /// 创建任务：空任务
-        /// </summary>
-        public static EmptyTask Empty()
-        {
-            return new EmptyTask();
-        }
+        //public static EmptyTask Empty()
+        //{
+        //    return new EmptyTask();
+        //}
 
         #endregion
 

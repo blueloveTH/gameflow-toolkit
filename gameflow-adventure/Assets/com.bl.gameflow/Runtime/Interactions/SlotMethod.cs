@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace GameFlow
 {
@@ -6,18 +7,18 @@ namespace GameFlow
     public sealed class SlotMethod : Attribute
     {
         private string signalName;
-        private bool asPrefix;
+        private bool useRegEx;
 
-        public SlotMethod(string signalName, bool asPrefix = true)
+        public SlotMethod(string signalName, bool useRegEx = false)
         {
             this.signalName = signalName;
-            this.asPrefix = asPrefix;
+            this.useRegEx = useRegEx;
         }
 
         internal bool Filter(Signal signal)
         {
-            if (asPrefix)
-                return signal.name.StartsWith(signalName);
+            if (useRegEx)
+                return Regex.IsMatch(signal.name, signalName);
             else
                 return signal.name == signalName;
         }

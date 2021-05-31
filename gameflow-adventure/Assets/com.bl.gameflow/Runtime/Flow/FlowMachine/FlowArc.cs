@@ -4,7 +4,7 @@ namespace GameFlow
 {
     public sealed class FlowArc
     {
-        private Dictionary<string, dynamic> data;
+        private Dictionary<string, object> data;
 
         public FlowNode source { get; private set; }
         public FlowNode target { get; private set; }
@@ -14,7 +14,7 @@ namespace GameFlow
             if (source.owner != target.owner)
                 throw new System.Exception("Inconsistent connection.");
 
-            data = new Dictionary<string, dynamic>();
+            data = new Dictionary<string, object>();
 
             this.source = source;
             this.target = target;
@@ -22,13 +22,13 @@ namespace GameFlow
             this.source.arcList.Add(this);
         }
 
-        public dynamic this[string key]
+        public object this[string key]
         {
             get { return data[key]; }
             set { data[key] = value; }
         }
 
-        public FlowArc AddData(string key, dynamic value)
+        public FlowArc AddData(string key, object value)
         {
             data.Add(key, value);
             return this;

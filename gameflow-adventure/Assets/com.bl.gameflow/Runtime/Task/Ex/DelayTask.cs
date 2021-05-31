@@ -3,7 +3,32 @@ using UnityEngine;
 
 namespace GameFlow
 {
-    public sealed class DelayTask : Task
+    public sealed class ProgressDelayTask : DelayTask
+    {
+        internal ProgressDelayTask(float duration, bool useUnscaledTime) : base(duration, useUnscaledTime) { }
+
+        public event System.Action<float> onUpdate;
+
+        protected override IEnumerator DelayCoroutine()
+        {
+            float totalTime = duration;
+
+            while (totalTime > 0)
+            {
+                onUpdate?.Invoke(1 - totalTime / duration);
+
+                yield return new WaitForEndOfFrame();
+
+                if (useUnscaledTime)
+                    totalTime -= Time.unscaledDeltaTime;
+                else
+                    totalTime -= Time.deltaTime;
+            }
+            Complete();
+        }
+    }
+
+    public class DelayTask : Task
     {
         public float duration { get; private set; }
         public bool useUnscaledTime { get; private set; }
@@ -20,7 +45,7 @@ namespace GameFlow
             StartCoroutine(DelayCoroutine());
         }
 
-        IEnumerator DelayCoroutine()
+        protected virtual IEnumerator DelayCoroutine()
         {
             if (useUnscaledTime)
                 yield return new WaitForSecondsRealtime(duration);

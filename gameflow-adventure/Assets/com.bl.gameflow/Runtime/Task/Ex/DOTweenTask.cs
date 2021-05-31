@@ -1,4 +1,4 @@
-﻿#if DOTWEEN
+﻿#if DOTWEEN_EX
 
 using GameFlow;
 using DG.Tweening;

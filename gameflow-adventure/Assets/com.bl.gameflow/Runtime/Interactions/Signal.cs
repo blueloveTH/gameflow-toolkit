@@ -10,25 +10,25 @@ namespace GameFlow
         public bool isBlocked { get; private set; }
         public bool debugMode { get; set; } = false;
 
-        private Dictionary<string, dynamic> data;
+        private Dictionary<string, object> data;
 
         internal Signal(InteractiveBehaviour source, string name)
         {
             if (source == null) throw new ArgumentNullException("source");
             this.name = name;
             this.source = source;
-            data = new Dictionary<string, dynamic>();
+            data = new Dictionary<string, object>();
 
             isBlocked = false;
         }
 
-        public dynamic this[string key]
+        public object this[string key]
         {
             get { return data[key]; }
             set { data[key] = value; }
         }
 
-        public Signal AddData(string key, dynamic value)
+        public Signal AddData(string key, object value)
         {
             data.Add(key, value);
             return this;
