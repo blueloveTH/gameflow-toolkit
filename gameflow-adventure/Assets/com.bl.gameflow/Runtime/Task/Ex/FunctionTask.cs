@@ -1,6 +1,6 @@
 ﻿namespace GameFlow
 {
-    public sealed class FunctionTask<T> : Task
+    public sealed class FuncTask<T> : Task
     {
         public T returnValue { get; private set; }
 
@@ -10,6 +10,6 @@
             Complete();
         }
 
-        internal FunctionTask() { }
+        internal FuncTask() { }
     }
 }

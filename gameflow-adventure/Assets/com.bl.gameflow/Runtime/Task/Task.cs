@@ -150,9 +150,9 @@ namespace GameFlow
         /// <summary>
         /// 创建任务：异步等待函数的返回值
         /// </summary>
-        public static FunctionTask<T> Function<T>()
+        public static FuncTask<T> Func<T>()
         {
-            return new FunctionTask<T>();
+            return new FuncTask<T>();
         }
 
         /// <summary>
