@@ -171,10 +171,10 @@ namespace GameFlow
             return new WaitEventTask(e);
         }
 
-        //public static EmptyTask Empty()
-        //{
-        //    return new EmptyTask();
-        //}
+        public static EmptyTask Empty()
+        {
+            return new EmptyTask();
+        }
 
         #endregion
 
