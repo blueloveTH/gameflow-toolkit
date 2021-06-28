@@ -1,8 +1,6 @@
 # GameFlow工具包
 
-为同时兼任策划和程序的游戏制作人打造的开发工具包！
-
-A Lightweight Flow-Control Toolkit for Game Mechanism in Unity.
+A Lightweight Flow-Control Toolkit for Gameplay.
 
 <br>
 
