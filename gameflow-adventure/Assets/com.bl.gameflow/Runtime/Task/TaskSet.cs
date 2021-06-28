@@ -10,19 +10,10 @@ namespace GameFlow
     {
         private HashSet<Task> members = new HashSet<Task>();
 
-        /// <summary>
-        /// 返回包含子任务的个数
-        /// </summary>
         public int Count { get { return members.Count; } }
 
-        /// <summary>
-        /// 返回已经完成的子任务个数
-        /// </summary>
         public int completedCount { get; private set; }
 
-        /// <summary>
-        /// 向集合添加一个新任务
-        /// </summary>
         public void Add(Task item)
         {
             if (item == null) return;
@@ -46,7 +37,6 @@ namespace GameFlow
 
         protected override void OnPlay()
         {
-            base.OnPlay();
             if (Count == 0) Complete();
             else
             {
@@ -60,7 +50,6 @@ namespace GameFlow
         protected override void OnKill()
         {
             foreach (var item in members) item.Kill();
-            base.OnKill();
         }
 
         public IEnumerator<Task> GetEnumerator()

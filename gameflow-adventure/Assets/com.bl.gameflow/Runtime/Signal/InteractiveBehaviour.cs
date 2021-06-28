@@ -124,12 +124,3 @@ namespace GameFlow
     }
 
 }
-
-
-internal static class EnumExtension
-{
-    internal static string ToStringKey(this System.Enum e)
-    {
-        return string.Format("{0}.{1}", e.GetType().Name, e.ToString());
-    }
-}

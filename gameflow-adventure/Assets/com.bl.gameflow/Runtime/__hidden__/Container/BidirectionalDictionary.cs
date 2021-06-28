@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameFlow
 {
-    public sealed class BidirectionalDic<TypeA, TypeB> : IEnumerable<KeyValuePair<TypeA, TypeB>>, IEnumerable
+    public sealed class BidirectionalDictionary<TypeA, TypeB> : IEnumerable<KeyValuePair<TypeA, TypeB>>, IEnumerable
     {
         private Dictionary<TypeA, TypeB> dicA2B = new Dictionary<TypeA, TypeB>();
         private Dictionary<TypeB, TypeA> dicB2A = new Dictionary<TypeB, TypeA>();

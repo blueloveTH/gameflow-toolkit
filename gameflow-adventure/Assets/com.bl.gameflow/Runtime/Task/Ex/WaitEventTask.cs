@@ -5,35 +5,33 @@ namespace GameFlow
     public sealed class WaitEventTask : Task
     {
         UnityEvent e;
-        bool tag = false;
+        bool isListenerAdded = false;
 
         internal WaitEventTask(UnityEvent e)
         {
             this.e = e;
         }
 
-        protected override void OnPlay()
+        private void Trigger()
         {
-            base.OnPlay();
-            e.AddListener(Complete);
-            tag = true;
+            e.RemoveListener(Trigger);
+            isListenerAdded = false;
+            Complete();
         }
 
-        protected override void OnComplete()
+        protected override void OnPlay()
         {
-            e.RemoveListener(Complete);
-            tag = false;
-            base.OnComplete();
+            e.AddListener(Trigger);
+            isListenerAdded = true;
         }
 
         protected override void OnKill()
         {
-            if (tag)
+            if (isListenerAdded)
             {
-                e.RemoveListener(Complete);
-                tag = false;
+                e.RemoveListener(Trigger);
+                isListenerAdded = false;
             }
-            base.OnKill();
         }
 
     }

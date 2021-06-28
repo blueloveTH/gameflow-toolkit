@@ -10,6 +10,16 @@
             Complete();
         }
 
+        protected override void OnPlay()
+        {
+
+        }
+
+        protected override void OnKill()
+        {
+
+        }
+
         internal FuncTask() { }
     }
 }

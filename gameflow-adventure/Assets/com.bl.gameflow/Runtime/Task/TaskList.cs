@@ -53,8 +53,6 @@ namespace GameFlow
 
         protected override void OnPlay()
         {
-            base.OnPlay();
-
             foreach (var item in members)
                 item.onComplete += NextItem;
             NextItem();
@@ -63,7 +61,6 @@ namespace GameFlow
         protected override void OnKill()
         {
             if (index < Count && current != null) current.Kill();
-            base.OnKill();
         }
 
         public IEnumerator<Task> GetEnumerator()

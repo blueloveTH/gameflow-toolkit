@@ -45,16 +45,6 @@ namespace GameFlow
             isBlocked = true;
         }
 
-        public bool CompareName(string name)
-        {
-            return this.name == name;
-        }
-
-        public bool CompareName(System.Enum e)
-        {
-            return this.name == e.ToStringKey();
-        }
-
         internal string Summary(InteractiveBehaviour target)
         {
             string txt = string.Empty;

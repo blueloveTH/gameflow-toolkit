@@ -14,7 +14,6 @@ namespace GameFlow
 
         protected override void OnPlay()
         {
-            base.OnPlay();
             StartCoroutine(DelayCoroutine());
         }
 
@@ -23,6 +22,11 @@ namespace GameFlow
             for (int i = 0; i < frameCount; i++)
                 yield return new WaitForEndOfFrame();
             Complete();
+        }
+
+        protected override void OnKill()
+        {
+
         }
     }
 }

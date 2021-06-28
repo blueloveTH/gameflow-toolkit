@@ -11,18 +11,18 @@ namespace GameFlow
 
         protected override IEnumerator DelayCoroutine()
         {
-            float totalTime = duration;
+            float remainingTime = duration;
 
-            while (totalTime > 0)
+            while (remainingTime > 0)
             {
-                onUpdate?.Invoke(1 - totalTime / duration);
+                onUpdate?.Invoke(1 - remainingTime / duration);
 
                 yield return new WaitForEndOfFrame();
 
                 if (useUnscaledTime)
-                    totalTime -= Time.unscaledDeltaTime;
+                    remainingTime -= Time.unscaledDeltaTime;
                 else
-                    totalTime -= Time.deltaTime;
+                    remainingTime -= Time.deltaTime;
             }
             Complete();
         }
@@ -41,7 +41,6 @@ namespace GameFlow
 
         protected override void OnPlay()
         {
-            base.OnPlay();
             StartCoroutine(DelayCoroutine());
         }
 
@@ -54,5 +53,9 @@ namespace GameFlow
             Complete();
         }
 
+        protected override void OnKill()
+        {
+
+        }
     }
 }

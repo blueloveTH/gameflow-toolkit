@@ -16,19 +16,11 @@ public class DOTweenTask : Task
 
     protected override void OnPlay()
     {
-        base.OnPlay();
         tween.Play();
-    }
-
-    protected override void OnComplete()
-    {
-        base.OnComplete();
-        tween.Complete();
     }
 
     protected override void OnKill()
     {
-        base.OnKill();
         tween.Kill();
     }
 

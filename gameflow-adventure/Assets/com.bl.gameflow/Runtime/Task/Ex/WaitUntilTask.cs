@@ -14,7 +14,6 @@ namespace GameFlow
 
         protected override void OnPlay()
         {
-            base.OnPlay();
             StartCoroutine(WaitUntil());
         }
 
@@ -22,6 +21,11 @@ namespace GameFlow
         {
             yield return new WaitUntil(predicate);
             Complete();
+        }
+
+        protected override void OnKill()
+        {
+
         }
     }
 }

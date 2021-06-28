@@ -9,9 +9,13 @@
             this.lambda = lambda;
         }
 
+        protected override void OnKill()
+        {
+
+        }
+
         protected override void OnPlay()
         {
-            base.OnPlay();
             lambda.Invoke();
             Complete();
         }
