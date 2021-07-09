@@ -118,9 +118,9 @@ namespace GameFlow
             return new DelayTask(duration, useUnscaledTime);
         }
 
-        public static ProgressDelayTask ProgressDelay(float duration, bool useUnscaledTime = false)
+        public static ProgressDelayTask ProgressDelay(float duration, System.Action<float> onUpdate, bool useUnscaledTime = false)
         {
-            return new ProgressDelayTask(duration, useUnscaledTime);
+            return new ProgressDelayTask(duration, useUnscaledTime, onUpdate);
         }
 
         public static WaitUntilTask WaitUntil(System.Func<bool> predicate)

@@ -5,9 +5,12 @@ namespace GameFlow
 {
     public sealed class ProgressDelayTask : DelayTask
     {
-        internal ProgressDelayTask(float duration, bool useUnscaledTime) : base(duration, useUnscaledTime) { }
+        internal ProgressDelayTask(float duration, bool useUnscaledTime, System.Action<float> onUpdate) : base(duration, useUnscaledTime)
+        {
+            this.onUpdate = onUpdate;
+        }
 
-        public event System.Action<float> onUpdate;
+        private System.Action<float> onUpdate;
 
         protected override IEnumerator DelayCoroutine()
         {
@@ -15,7 +18,7 @@ namespace GameFlow
 
             while (remainingTime > 0)
             {
-                onUpdate?.Invoke(1 - remainingTime / duration);
+                onUpdate.Invoke(1 - remainingTime / duration);
 
                 yield return new WaitForEndOfFrame();
 
