@@ -2,11 +2,11 @@ docs_dir: docs
 site_name: GameFlow 文档
 nav:
     - 主页: index.md
-    - API参考:
-        - Task API: api_references/task.md
-        - Signal API: api_references/signal.md
-        - Flow API: api_references/flow.md
-        - Tree API: api_references/tree.md
-        - __hidden__ API: api_references/__hidden__.md
+    - 教程:
+        - 使用Task组件处理异步逻辑: api_references/task.md
+        - 使用Signal机制管理碰撞交互: api_references/signal.md
+        - 创建异步状态机: api_references/flow.md
+        - 创建Dart风格的行为树: api_references/tree.md
+        - 其他的库函数: api_references/__hidden__.md
 theme: readthedocs
 repo_url: https://github.com/blueloveTH/gameflow-toolkit
