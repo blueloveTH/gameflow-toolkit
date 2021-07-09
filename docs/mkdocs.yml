@@ -1,0 +1,12 @@
+docs_dir: docs
+site_name: GameFlow 文档
+nav:
+    - 主页: index.md
+    - API参考:
+        - Task API: api_references/task.md
+        - Signal API: api_references/signal.md
+        - Flow API: api_references/flow.md
+        - Tree API: api_references/tree.md
+        - __hidden__ API: api_references/__hidden__.md
+theme: readthedocs
+repo_url: https://github.com/blueloveTH/gameflow-toolkit
