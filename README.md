@@ -4,10 +4,7 @@ A Lightweight Flow-Control Toolkit for Gameplay.
 
 <br>
 
-**GameFlow-Toolkit** 是一款用于制作Unity游戏的工具包，通过它可以轻松创建和管理游戏机制的交互。gf出自2018年秋季探索（Autumn Quest），经过多个项目的实践积累，精化并逐步完善。主要特性如下：
-
-+ 快速实现流程控制代码
-+ 轻量、极简的API
+**GameFlow-Toolkit** 是一个轻量级的、用于实现游戏流程控制的Unity工具包，出自2018年秋季探索（Autumn Quest），其包含四大核心组件。异步任务，信号槽，状态机和行为树。
 
 ## 安装与配置
 
@@ -40,29 +37,6 @@ list.onComplete += () => Debug.Log("The list is completed.");
 list.Play();
 ```
 
-
-
-#### FlowMachine
-
-```c#
-//例：使用函数式API创建状态图
-public enum Colors{
-    Black, white
-}
-
-//定义图和节点
-FlowMachine fd = FlowMachine.FromEnum<Colors>();
-
-//定义回调
-fd[Colors.Black].onEnter += (x) => spRenderer.color = Color.black;
-fd[Colors.white].onEnter += (x) => spRenderer.color = Color.white;
-
-//初始化
-fd.Enter(Colors.Black);
-```
-
-
-
 #### InteractiveBehaviour
 
 ```c#
@@ -75,11 +49,52 @@ public class EmitterNode : InteractiveBehaviour{
 
 //例：接收者
 public class SlotNode : InteractiveBehaviour{
-    [SlotFunction("on_touch")]
+    [SlotMethod("on_touch")]
     void OnSignal(){
         //signal received
     }
 }
+```
+
+
+#### FlowMachine
+
+```c#
+//例：使用函数式API创建状态机
+public enum Colors{
+    Black, white
+}
+
+//定义图和节点
+FlowMachine fm = new FlowMachine<Colors>();
+
+//定义回调
+fm[Colors.Black].onEnter += (x) => spRenderer.color = Color.black;
+fm[Colors.white].onEnter += (x) => spRenderer.color = Color.white;
+
+//初始化
+fm.Enter(Colors.Black);
+```
+
+
+#### BehaviourTree
+
+```csharp
+BehaviourTree tree = new BehaviourTree(
+	owner: this,
+	child: new Sequencer(
+		children: new BehaviourNode[]
+			{
+				new Conditional(
+					predicate: () => EnemyDetected(),
+					child: new Lambda(() => print("Attack!"))
+				),
+				new Lambda(()=>print("Wander."))
+			}
+		)
+	);
+
+tree.Play();
 ```
 
 
