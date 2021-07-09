@@ -4,7 +4,7 @@ A Lightweight Flow-Control Toolkit for Gameplay.
 
 <br>
 
-**GameFlow-Toolkit** 是一个轻量级的、用于实现游戏流程控制的Unity工具包，出自2018年秋季探索（Autumn Quest），其包含四大核心组件。异步任务，信号槽，状态机和行为树。
+**GameFlow-Toolkit** 是一个轻量级的、用于实现游戏流程控制的Unity工具包，出自2018年秋季探索（Autumn Quest），其包含四大核心组件。
 
 ## 安装与配置
 
@@ -24,7 +24,7 @@ A Lightweight Flow-Control Toolkit for Gameplay.
 
 ## 快速开始
 
-#### TaskList
+#### 使用Task组件处理异步逻辑
 
 ```c#
 //例：等待空格键按下
@@ -37,19 +37,19 @@ list.onComplete += () => Debug.Log("The list is completed.");
 list.Play();
 ```
 
-#### InteractiveBehaviour
+#### 使用Signal机制管理碰撞交互
 
 ```c#
 //例：发送者
-public class EmitterNode : InteractiveBehaviour{
+public class PlayerSignal : InteractiveBehaviour{
     void OnTriggerEnter2D(Collider2D c2d){
-        Emit(Signal("on_touch"), c2d.gameObject);
+        Emit(Signal("player/hit"), c2d.gameObject);
     }
 }
 
 //例：接收者
-public class SlotNode : InteractiveBehaviour{
-    [SlotMethod("on_touch")]
+public class SpikeTrigger : InteractiveBehaviour{
+    [SlotMethod("player/hit")]
     void OnSignal(){
         //signal received
     }
@@ -57,15 +57,14 @@ public class SlotNode : InteractiveBehaviour{
 ```
 
 
-#### FlowMachine
+#### 创建异步状态机
 
 ```c#
-//例：使用函数式API创建状态机
 public enum Colors{
     Black, white
 }
 
-//定义图和节点
+//从枚举生成异步状态图
 FlowMachine fm = new FlowMachine<Colors>();
 
 //定义回调
@@ -77,7 +76,7 @@ fm.Enter(Colors.Black);
 ```
 
 
-#### BehaviourTree
+#### 创建Dart风格的行为树
 
 ```csharp
 BehaviourTree tree = new BehaviourTree(

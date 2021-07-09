@@ -7,6 +7,6 @@ nav:
         - 使用Signal机制管理碰撞交互: api_references/signal.md
         - 创建异步状态机: api_references/flow.md
         - 创建Dart风格的行为树: api_references/tree.md
-        - 其他的库函数: api_references/__hidden__.md
+        - 其他库函数: api_references/__hidden__.md
 theme: readthedocs
 repo_url: https://github.com/blueloveTH/gameflow-toolkit
