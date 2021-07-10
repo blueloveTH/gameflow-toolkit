@@ -13,11 +13,10 @@ A Lightweight Flow-Control Toolkit for Gameplay.
 
 ([最新版本](https://github.com/blueloveTH/gameflow-toolkit/releases/latest))
 
-通过upm安装：
-
-1. Windows/Package Manager
-2. Add package from disk...
-3. 选择package.json
+1. Open the package manager.
+2. Click the plus icon on the top left.
+3. Select "Add package from git URL".
+4. Paste "https://github.com/blueloveTH/gameflow-toolkit.git".
 
 运行环境：Unity 2019.4及以上
 
