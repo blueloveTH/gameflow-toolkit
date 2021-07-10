@@ -16,7 +16,9 @@ A Lightweight Flow-Control Toolkit for Gameplay.
 1. Open the package manager.
 2. Click the plus icon on the top left.
 3. Select "Add package from git URL".
-4. Paste "https://github.com/blueloveTH/gameflow-toolkit.git".
+4. Paste
+    +   `https://github.com/blueloveTH/gameflow-toolkit.git`
+    +   `https://gitee.com/blueloveTH/gameflow-toolkit.git`
 
 运行环境：Unity 2019.4及以上
 
