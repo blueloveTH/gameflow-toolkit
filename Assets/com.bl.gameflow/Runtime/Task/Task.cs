@@ -118,9 +118,9 @@ namespace GameFlow
             return new DelayTask(duration, useUnscaledTime);
         }
 
-        public static ProgressDelayTask ProgressDelay(float duration, System.Action<float> onUpdate, bool useUnscaledTime = false)
+        public static ProgressDelayTask ProgressDelay(float duration, System.Action<float> onProgress, bool useUnscaledTime = false)
         {
-            return new ProgressDelayTask(duration, useUnscaledTime, onUpdate);
+            return new ProgressDelayTask(duration, useUnscaledTime, onProgress);
         }
 
         public static WaitUntilTask WaitUntil(System.Func<bool> predicate)
@@ -133,9 +133,9 @@ namespace GameFlow
             return new LambdaTask(lambda);
         }
 
-        public static FuncTask<T> Func<T>()
+        public static FunctionTask<T> Function<T>()
         {
-            return new FuncTask<T>();
+            return new FunctionTask<T>();
         }
 
         public static DelayFramesTask DelayFrames(int frameCount)
