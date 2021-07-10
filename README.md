@@ -4,7 +4,12 @@ A Lightweight Flow-Control Toolkit for Gameplay.
 
 <br>
 
-**GameFlow-Toolkit** 是一个轻量级的、用于实现游戏流程控制的Unity工具包，出自2018年秋季探索（Autumn Quest），其包含四大核心组件。
+**GameFlow-Toolkit** 是轻量级的、用于游戏流程控制的Unity工具包，出自2018年秋季探索（Autumn Quest）。其包含如下四大特性，整合了一套流程处理的最佳实践。
+
++   Task组件处理异步逻辑
++   Signal机制管理碰撞交互
++   异步状态机
++   Dart风格的行为树
 
 ## 安装与配置
 
@@ -16,9 +21,13 @@ A Lightweight Flow-Control Toolkit for Gameplay.
 2. Add package from disk...
 3. 选择package.json
 
-
-
 运行环境：Unity 2019.4及以上
+
+
+
+## 教程页
+
+https://gameflow-toolkit.readthedocs.io/zh_CN/latest/api_references/task/
 
 
 
@@ -51,7 +60,7 @@ public class PlayerSignal : InteractiveBehaviour{
 public class SpikeTrigger : InteractiveBehaviour{
     [SlotMethod("player/hit")]
     void OnSignal(){
-        //signal received
+        // TODO: 遇到地刺
     }
 }
 ```
@@ -71,7 +80,10 @@ FlowMachine fm = new FlowMachine<Colors>();
 fm[Colors.Black].onEnter += (x) => spRenderer.color = Color.black;
 fm[Colors.white].onEnter += (x) => spRenderer.color = Color.white;
 
-//初始化
+//定义异步转换任务
+fm[Colors.Black].taskOnEnter += Task.Delay(1.0f);
+
+//切换状态
 fm.Enter(Colors.Black);
 ```
 
