@@ -1,6 +1,8 @@
 # 使用信号机制管理碰撞交互
 
-使用GameFlow的信号机制，可使你的碰撞逻辑更具可维护和可扩展性，创建一个子物体，并继承`InteractiveBehaviour`来编写信号/接收器组件。
+命名空间：`GameFlow`
+
+信号机制可使你的碰撞逻辑更具可维护和可扩展性，创建一个子物体，并继承`InteractiveBehaviour`来编写信号/接收器组件。
 
 #### 发送者
 
@@ -34,9 +36,9 @@ public class SpikeTrigger : InteractiveBehaviour{
 }
 ```
 
-你会注意到，信号推荐的命名方法是`xx/xx`，因为`SlotMethod`可以开启正则表达式，从而进行模糊匹配。
+信号推荐的命名方法是`xx/xx`，因为`SlotMethod`可以开启正则表达式，从而进行模糊匹配。
 
-第二种定义信号接收者的方法是显式使用`AddSlot`，它允许显式过滤信号，更加灵活。
+第二种定义信号接收者的方法是使用`AddSlot`，它允许显式过滤信号，更加灵活。
 
 
 
@@ -45,7 +47,7 @@ public class SpikeTrigger : InteractiveBehaviour{
 使用信号机制的另一大好处，是可以跟踪每一次交互。
 
 +   将`Signal`对象的`debugMode`置为`true`，使系统跟踪这个信号，输出日志。
-+   将`InteractiveBehaviour`对象的`debugMode`置为`true`，使系统跟踪所有到达本对象的信号，输出日志。
++   将`InteractiveBehaviour`对象的`debugMode`置为`true`，使系统跟踪所有到达该对象的信号，输出日志。
 
 
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace GameFlow
 {
@@ -19,7 +18,7 @@ namespace GameFlow
         {
             bool successful = currentSet.Add(item);
             if (successful)
-                OnAdd?.Invoke(item);
+                onAdd?.Invoke(item);
             return successful;
         }
 
@@ -27,13 +26,13 @@ namespace GameFlow
         {
             bool successful = currentSet.Remove(item);
             if (successful)
-                OnRemove?.Invoke(item);
+                onRemove?.Invoke(item);
             return successful;
         }
 
 
-        public event System.Action<T> OnAdd;
-        public event System.Action<T> OnRemove;
+        public event System.Action<T> onAdd;
+        public event System.Action<T> onRemove;
 
         public void Overwrite(HashSet<T> newSet)
         {
@@ -43,9 +42,9 @@ namespace GameFlow
             foreach (var item in diffSet)
             {
                 if (newSet.Contains(item))
-                    OnAdd?.Invoke(item);
+                    onAdd?.Invoke(item);
                 else
-                    OnRemove?.Invoke(item);
+                    onRemove?.Invoke(item);
             }
             currentSet = newSet;
         }

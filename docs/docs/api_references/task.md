@@ -1,5 +1,7 @@
 # 使用Task组件处理异步逻辑
 
+命名空间：`GameFlow`
+
 主要涉及的类是`Task`，`TaskList`，`TaskSet`和`TaskSequence`。
 
 #### 延迟调用

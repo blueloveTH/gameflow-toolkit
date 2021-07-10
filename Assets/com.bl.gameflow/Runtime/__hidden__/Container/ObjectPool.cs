@@ -7,15 +7,11 @@ namespace GameFlow
     {
         private Stack<T> buffer = new Stack<T>();
 
-        public Creator creator { get; private set; }
-        public OnPush onPush { get; private set; }
-        public OnPop onPop { get; private set; }
+        public System.Func<T> creator { get; private set; }
+        public System.Action<T> onPush { get; private set; }
+        public System.Action<T> onPop { get; private set; }
 
-        public delegate T Creator();
-        public delegate void OnPush(T t);
-        public delegate void OnPop(T t);
-
-        public ObjectPool(Creator creator, OnPush onPush = null, OnPop onPop = null)
+        public ObjectPool(System.Func<T> creator, System.Action<T> onPush = null, System.Action<T> onPop = null)
         {
             this.creator = creator;
             this.onPop = onPop;
